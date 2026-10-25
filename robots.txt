@@ -1,0 +1,7 @@
+# Open to everyone, including AI assistants and research crawlers.
+# This is a free, open-source set of classroom Bible games; there is
+# nothing here we want hidden from search or from AI agents.
+User-agent: *
+Allow: /
+
+Sitemap: https://oacalix.github.io/bible-games/sitemap.xml

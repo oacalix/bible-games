@@ -1,0 +1,486 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>True or False Bible Game (Verdadero o Falso) · Bible Games</title>
+<meta name="description" content="A fast bilingual true/false review game for Catholic classrooms, covering the Holy Trinity, Creation and Prayer. Team-based with scoring, built for Religious Education.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://oacalix.github.io/bible-games/true-false/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%9A%A1%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:title" content="True or False · Bible Games">
+<meta property="og:description" content="A fast bilingual true/false review game for Catholic classrooms, covering the Holy Trinity, Creation and Prayer.">
+<meta property="og:url" content="https://oacalix.github.io/bible-games/true-false/">
+<meta property="og:image" content="https://oacalix.github.io/bible-games/screenshots/sc2.png">
+<meta property="og:locale" content="es_ES">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="True or False · Bible Games">
+<meta name="twitter:description" content="A fast bilingual true/false Bible review game for Catholic classrooms.">
+<meta name="twitter:image" content="https://oacalix.github.io/bible-games/screenshots/sc2.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Nunito:ital,wght@0,600;0,800;0,900;1,600&display=swap" rel="stylesheet">
+<script src="../analytics.js" defer></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "True or False",
+  "alternateName": "Verdadero o Falso",
+  "url": "https://oacalix.github.io/bible-games/true-false/",
+  "applicationCategory": "GameApplication",
+  "operatingSystem": "Any (web browser)",
+  "description": "A fast bilingual true/false review game for Catholic classrooms, covering the Holy Trinity, Creation and Prayer.",
+  "inLanguage": ["es", "en"],
+  "isAccessibleForFree": true,
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "audience": { "@type": "EducationalAudience", "educationalRole": "student" },
+  "author": { "@type": "Person", "name": "Oscar Calix", "url": "https://otdev.io/" },
+  "isPartOf": { "@id": "https://oacalix.github.io/bible-games/#website" }
+}
+</script>
+<style>
+:root{
+  --sky:#2fa8de; --ink:#1b1f3b; --soft:#4b5170;
+  --yel:#ffd23f; --grn:#3ddc84; --org:#ff8c42; --pnk:#ff6b9a; --pur:#9b72f2; --red:#ff4d4d;
+  --disp:'Bungee','Arial Black',Impact,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --sky:#1f86b8; } }
+:root[data-theme="dark"]{ --sky:#1f86b8; }
+*,*::before,*::after{box-sizing:border-box}
+html{height:100%}
+body{margin:0;height:100%;overflow:hidden;color:var(--ink);font-family:'Nunito',system-ui,'Segoe UI',Arial,sans-serif;font-weight:600;
+  background-color:var(--sky);
+  background-image:repeating-conic-gradient(from 0deg at 50% -10%, rgba(255,255,255,.10) 0deg 8deg, transparent 8deg 16deg)}
+button{font-family:inherit;cursor:pointer;color:var(--ink)}
+button:focus-visible{outline:4px solid var(--yel);outline-offset:3px}
+a.back{color:#fff;font-weight:900;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+
+.app{height:100%;display:flex;flex-direction:column;gap:1.4vh;padding:1.6vh 1.6vw}
+header{display:flex;align-items:center;gap:1.2vw;flex:none;flex-wrap:wrap}
+h1{margin:0;font-family:var(--disp);font-weight:400;color:#fff;line-height:1;flex:0 1 auto;max-width:38%;
+  font-size:clamp(1rem,min(2.6vw,4.4vh),2.6rem);text-shadow:3px 3px 0 var(--ink)}
+.turn{flex:1;min-width:0;display:flex;align-items:center;gap:10px;background:#fff;border:4px solid var(--ink);border-radius:12px;
+  box-shadow:4px 4px 0 var(--ink);padding:.8vh 14px;font-weight:900;font-size:clamp(.9rem,min(1.6vw,2.7vh),1.5rem);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.turn .dot{width:1.2em;height:1.2em;border-radius:50%;border:3px solid var(--ink);background:var(--c);flex:none}
+.ctrls{display:flex;gap:8px;flex:none;flex-wrap:wrap}
+.chip{background:#fff;border:3px solid var(--ink);border-radius:10px;padding:.7vh 12px;font-weight:800;font-size:clamp(.8rem,min(1.1vw,2vh),1.05rem);box-shadow:3px 3px 0 var(--ink);white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
+.chip:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+
+.stage{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:1vh 0}
+.card{background:#fff;border:5px solid var(--ink);border-radius:18px;box-shadow:10px 10px 0 var(--ink);
+  max-width:900px;width:100%;max-height:100%;overflow:auto;padding:clamp(18px,3.5vh,36px) clamp(18px,3.5vw,40px);animation:pop .22s ease-out}
+@keyframes pop{from{transform:scale(.9) rotate(-1deg);opacity:0}to{transform:none;opacity:1}}
+.qhead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.tag{background:var(--c);border:3px solid var(--ink);border-radius:999px;padding:4px 12px;font-weight:900}
+.who{margin:14px 0 0;display:flex;align-items:center;gap:10px;background:var(--c);border:3px solid var(--ink);border-radius:12px;padding:8px 14px;font-weight:900;font-size:clamp(1.05rem,min(2.4vw,3.4vh),1.6rem)}
+.timer{height:14px;border:3px solid var(--ink);border-radius:999px;overflow:hidden;background:#eef2f7;margin-top:14px}
+.timer i{display:block;height:100%;width:100%;background:var(--grn);transition:width .1s linear}
+.stmt{margin:2.4vh 0 1vh;font-weight:900;font-size:clamp(1.5rem,min(4vw,6vh),3.2rem);line-height:1.25;text-align:center}
+.tf{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:2vh 0}
+.tfbtn{border:4px solid var(--ink);border-radius:16px;box-shadow:5px 5px 0 var(--ink);padding:20px 10px;
+  font-family:var(--disp);font-weight:400;font-size:clamp(1.3rem,4vw,2.2rem);background:#fff}
+.tfbtn:active:not(:disabled){transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+.tfbtn.t{background:var(--grn)} .tfbtn.f{background:var(--red);color:#fff}
+.tfbtn:disabled{opacity:.5}
+.result{text-align:center;font-family:var(--disp);font-size:clamp(1.3rem,3.6vw,2rem);margin:6px 0 0}
+.result.ok{color:#1c8a4e} .result.no{color:#c92b2b}
+.ans{display:none;background:#eef2f7;border:3px solid var(--ink);border-radius:12px;padding:12px 16px;margin:14px 0}
+.ans.on{display:block;animation:pop .22s}
+.ans .t{font-weight:900;font-size:1.15rem}
+.ans .r{margin-top:6px;font-size:.95rem;color:var(--soft)}
+.row{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.btn{border:3px solid var(--ink);border-radius:12px;box-shadow:4px 4px 0 var(--ink);padding:10px 18px;font-size:clamp(1rem,min(1.6vw,2.6vh),1.35rem);font-weight:900;background:#fff}
+.btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+.btn.g{background:var(--grn)} .btn.y{background:var(--yel)} .btn.p{background:var(--pur);color:#fff}
+.btn.ghost{box-shadow:none;border-style:dashed;margin-left:auto}
+
+.scores{flex:none;display:grid;grid-template-columns:repeat(var(--n,2),minmax(0,1fr));gap:1.2vw}
+.team{background:#fff;border:4px solid var(--ink);border-radius:12px;box-shadow:4px 4px 0 var(--ink);
+  padding:.6vh 12px;display:flex;align-items:center;gap:10px}
+.team .sw{width:14px;align-self:stretch;border-radius:6px;background:var(--c);border:2px solid var(--ink);flex:none}
+.team .nm{flex:1;min-width:0;font-weight:900;font-size:clamp(.85rem,min(1.4vw,2.4vh),1.3rem);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.team .pt{font-family:var(--disp);font-size:clamp(1.1rem,min(2.4vw,4vh),2.4rem)}
+.team .adj{display:flex;flex-direction:column;gap:2px}
+.team .adj button{background:#fff;border:2px solid var(--ink);border-radius:6px;font-size:.68rem;font-weight:800;padding:0 5px;line-height:1.3}
+.team.now{background:var(--c)}
+
+.overlay{position:fixed;inset:0;background:rgba(27,31,59,.78);display:none;align-items:center;justify-content:center;
+  padding:calc(2vh + env(safe-area-inset-top,0px)) 2vw calc(2vh + env(safe-area-inset-bottom,0px));z-index:10}
+.overlay.on{display:flex}
+.setup h2,.end h2{margin:0;font-family:var(--disp);font-weight:400;font-size:clamp(1.4rem,4vw,2.2rem)}
+.setup .lbl{display:block;margin:18px 0 8px;font-weight:900;font-size:1.1rem}
+.pick{display:flex;gap:8px;flex-wrap:wrap}
+.pick button{background:#fff;border:3px solid var(--ink);border-radius:10px;padding:8px 14px;font-weight:900;font-size:1.05rem;box-shadow:3px 3px 0 var(--ink);text-align:left}
+.pick button small{display:block;font-weight:600;font-size:.82rem;color:var(--soft)}
+.pick button.sel{background:var(--yel)}
+.pick button.num{font-family:var(--disp);font-weight:400;font-size:1.3rem;padding:6px 18px}
+.decks{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.decks button{display:flex;align-items:center;gap:10px}
+.decks .ti{font-size:1.8rem}
+.names{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px}
+.names input{width:100%;font-family:inherit;font-weight:800;font-size:1.1rem;padding:10px 12px;border-radius:10px;border:3px solid var(--ink);background:var(--c)}
+.rank{list-style:none;padding:0;margin:16px 0}
+.rank li{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border:3px solid var(--ink);border-radius:10px;margin-bottom:8px;font-weight:900;font-size:1.2rem;background:#fff}
+.rank li span:last-child{font-family:var(--disp)}
+.rank li:first-child{background:var(--c);font-size:1.5rem;box-shadow:4px 4px 0 var(--ink)}
+
+@media (max-width:700px){
+  body{overflow:auto;height:auto;min-height:100%}
+  .app{height:auto;padding:10px 10px 0;gap:10px}
+  header{gap:8px}
+  h1{max-width:none;flex:1 1 0;font-size:1.3rem}
+  .chip{padding:6px 9px;font-size:1rem;box-shadow:2px 2px 0 var(--ink)}
+  .turn{flex-basis:100%;white-space:normal;font-size:1rem;padding:8px 12px;box-shadow:3px 3px 0 var(--ink)}
+  .stmt{font-size:1.5rem}
+  .tf{grid-template-columns:1fr 1fr}
+  .scores{position:sticky;bottom:0;z-index:5;margin:6px -10px 0;padding:10px 10px calc(10px + env(safe-area-inset-bottom,0px));
+    background:var(--sky);border-top:4px solid var(--ink);grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .team{padding:6px 8px;gap:6px;border-width:3px;box-shadow:3px 3px 0 var(--ink);flex-wrap:wrap;row-gap:4px}
+  .team .sw{display:none}
+  .team .nm{flex-basis:100%;font-size:.95rem;border-bottom:3px solid var(--c);padding-bottom:2px}
+  .team .pt{flex:1;font-size:1.2rem}
+  .team .adj{flex-direction:row}
+  .team.now .nm{border-color:var(--ink)}
+  .names{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){ *{animation:none!important;transition:none!important} }
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <h1 id="title"></h1>
+    <div class="turn" id="turn"></div>
+    <div class="ctrls">
+      <a class="chip back" href="../" id="homeBtn">🏠 <span id="homeTxt"></span></a>
+      <button class="chip" id="langBtn"></button>
+      <button class="chip" id="timeBtn"></button>
+      <button class="chip" id="newBtn"></button>
+    </div>
+  </header>
+  <div class="stage" id="stage"></div>
+  <div class="scores" id="scores"></div>
+</div>
+
+<div class="overlay" id="sov"><div class="card setup" id="scard"></div></div>
+<div class="overlay" id="eov"><div class="card end" id="ecard"></div></div>
+<div class="overlay" id="cov"><div class="card" id="ccard"></div></div>
+
+<script>
+const TEAM_COLORS=['#ffd23f','#ff6b9a','#3ddc84','#9b72f2'];
+/* Formato de cada afirmación:
+   [frase ES, frase EN, esVerdadera(bool), nota ES, nota EN] */
+const DECKS=[
+{id:'trinity',ic:'✝️',t:['La Trinidad y la Creación','The Trinity & Creation'],items:[
+ ['Dios es Padre, Hijo y Espíritu Santo.','God is Father, Son, and Holy Spirit.',true,'Un solo Dios en tres personas: la Santísima Trinidad.','One God in three persons: the Holy Trinity.'],
+ ['La Trinidad son tres dioses diferentes.','The Trinity is three different gods.',false,'Es un solo Dios en tres personas, no tres dioses.','It is one God in three persons, not three gods.'],
+ ['Toda la creación muestra el amor de Dios.','All creation shows God’s love.',true,'CCC#288; 293; 315; 319'],
+ ['Dios creó el mundo pero no cuida a las personas.','God created the world but doesn’t care for people.',false,'Dios creó, ama y cuida a todas las personas.','God created, loves and cares for all people.'],
+ ['El libro del Génesis cuenta cómo Dios creó el mundo.','The book of Genesis tells the story of how God created the world.',true,'Génesis / Genesis 1'],
+ ['Hacemos la Señal de la Cruz para recordar a la Santísima Trinidad.','We make the Sign of the Cross to remember the Holy Trinity.',true,'CCC#2157; 2166'],
+ ['Jesús fue enviado por Dios, su Padre.','Jesus was sent by God the Father.',true,'CCC#479; 620; 733'],
+ ['Solo los adultos pueden conocer y amar a Dios.','Only adults can get to know and love God.',false,'Niños y adultos están llamados a conocer y amar a Dios.','Children and adults alike are called to know and love God.'],
+ ['El Espíritu Santo ayuda a las personas a creer en Dios.','The Holy Spirit helps people believe in God.',true,'CCC#183'],
+ ['Dios hizo a los seres humanos, varones y mujeres.','God made humans, both male and female.',true,'CCC#355; 369; 383'],
+ ['La Trinidad es un misterio de nuestra fe que no entendemos del todo.','The Trinity is a mystery of our faith that we may not fully understand.',true,'Lo creemos por fe, aunque no lo comprendamos del todo.','We believe it by faith, even without fully understanding it.'],
+ ['Dios dejó de crear después de los primeros seis días.','God stopped creating after the first six days.',false,'Dios sigue ejerciendo su poder creador hoy en día.','God continues to exercise his creative power even today.']
+]},
+{id:'prayer',ic:'🙏',t:['La Oración','Prayer'],items:[
+ ['La oración es hablar y escuchar a Dios.','Prayer is talking and listening to God.',true,'CCC#2559; 2590'],
+ ['Solo los sacerdotes pueden orar.','Only priests can pray.',false,'Cualquier persona puede orar, en cualquier momento.','Anyone can pray, at any time.'],
+ ['El Padre Nuestro es una oración que Jesús mismo nos enseñó.','The Our Father is a prayer Jesus himself taught us.',true,'Mateo / Matthew 6:9-13'],
+ ['Solo podemos orar dentro de la iglesia.','We can only pray inside a church.',false,'Podemos orar en casa, en la escuela o en cualquier lugar.','We can pray at home, at school, or anywhere.'],
+ ['Comenzamos y terminamos nuestras oraciones con la Señal de la Cruz.','We begin and end our prayers with the Sign of the Cross.',true,'CCC#2157; 2166'],
+ ['La oración diaria ayuda a las personas a mantenerse cerca de Dios.','Daily prayer helps people stay close to God.',true,'CCC#2166; 2676; 2688; 2759'],
+ ['La posición del cuerpo, como arrodillarse, no tiene nada que ver con la oración.','Body position, like kneeling, has nothing to do with prayer.',false,'La postura del cuerpo puede ser una parte esencial de la oración.','One’s body position can be an essential part of praying.'],
+ ['Los cristianos pueden orar solos o con otras personas.','Christians can pray alone or with others.',true,'CCC#2559; 2590'],
+ ['Hay cinco formas de oración cristiana: bendición, petición, intercesión, acción de gracias y alabanza.','There are five forms of Christian prayer: blessing, petition, intercession, thanksgiving, and praise.',true,'CCC#2626-2649'],
+ ['Rezar el Rosario es un ejemplo de oración.','Praying the Rosary is an example of prayer.',true,'Oración tradicional católica.','A traditional Catholic devotion.'],
+ ['El silencio nunca forma parte de la oración.','Silence is never part of prayer.',false,'El silencio y escuchar son partes esenciales de la oración.','Silence and listening are essential parts of prayer.'],
+ ['“Ven, Espíritu Santo” es una oración sencilla y directa.','“Come, Holy Spirit” is a simple and direct prayer.',true,'CCC#2671']
+]},
+{id:'jesus',ic:'✝️',t:['La Vida de Jesús','The Life of Jesus'],items:[
+ ['Jesús nació en Belén.','Jesus was born in Bethlehem.',true,'Lucas / Luke 2:4-7'],
+ ['Jesús nació en Jerusalén.','Jesus was born in Jerusalem.',false,'Nació en Belén, no en Jerusalén.','He was born in Bethlehem, not Jerusalem.'],
+ ['El primer milagro de Jesús fue convertir el agua en vino.','Jesus’ first miracle was turning water into wine.',true,'Juan / John 2:1-11'],
+ ['Jesús alimentó a unas 5,000 personas con cinco panes y dos peces.','Jesus fed about 5,000 people with five loaves and two fish.',true,'Mateo / Matthew 14:21'],
+ ['Jesús escogió a 20 apóstoles.','Jesus chose 20 apostles.',false,'Escogió a 12 apóstoles.','He chose 12 apostles.','Lucas / Luke 6:13'],
+ ['Pedro y Andrés eran pescadores antes de seguir a Jesús.','Peter and Andrew were fishermen before following Jesus.',true,'Mateo / Matthew 4:18-19'],
+ ['Jesús entró a Jerusalén montado en un caballo.','Jesus rode into Jerusalem on a horse.',false,'Entró montado en un burrito.','He rode in on a young donkey.','Juan / John 12:14-15'],
+ ['En la Última Cena, Jesús lavó los pies de sus discípulos.','At the Last Supper, Jesus washed his disciples’ feet.',true,'Juan / John 13:4-5'],
+ ['Jesús resucitó al tercer día.','Jesus rose from the dead on the third day.',true,'Lucas / Luke 24:6-7'],
+ ['Zaqueo se subió a un árbol para poder ver a Jesús.','Zacchaeus climbed a tree to see Jesus.',true,'Lucas / Luke 19:1-4']
+]},
+{id:'genesis',ic:'🌍',t:['Historias del Génesis','Genesis Stories'],items:[
+ ['Noé construyó un arca.','Noah built an ark.',true,'Génesis / Genesis 6:14'],
+ ['Llovió por 40 días y 40 noches durante el diluvio.','It rained for 40 days and 40 nights during the flood.',true,'Génesis / Genesis 7:12'],
+ ['Dios puso un arcoíris en el cielo como señal de su promesa a Noé.','God put a rainbow in the sky as a sign of his promise to Noah.',true,'Génesis / Genesis 9:13'],
+ ['La esposa de Abraham se llamaba Rebeca.','Abraham’s wife was named Rebekah.',false,'Se llamaba Sara.','Her name was Sarah.','Génesis / Genesis 17:15'],
+ ['Dios le prometió a Abraham tantos descendientes como las estrellas del cielo.','God promised Abraham as many descendants as the stars in the sky.',true,'Génesis / Genesis 15:5'],
+ ['Isaac tuvo hijos gemelos llamados Esaú y Jacob.','Isaac’s twin sons were named Esau and Jacob.',true,'Génesis / Genesis 25:24-26'],
+ ['Los hermanos de José lo vendieron y terminó en Egipto.','Joseph’s brothers sold him, and he ended up in Egypt.',true,'Génesis / Genesis 37:28'],
+ ['Al final, José perdonó a sus hermanos.','In the end, Joseph forgave his brothers.',true,'Génesis / Genesis 45:4-15'],
+ ['Dios formó a Adán del polvo de la tierra.','God formed Adam from the dust of the ground.',true,'Génesis / Genesis 2:7'],
+ ['El jardín donde vivían Adán y Eva se llamaba Belén.','The garden where Adam and Eve lived was called Bethlehem.',false,'Se llamaba Edén.','It was called Eden.','Génesis / Genesis 2:8']
+]},
+{id:'exodus',ic:'🌊',t:['Moisés y el Éxodo','Moses & the Exodus'],items:[
+ ['El bebé Moisés fue escondido en una canasta en el río Nilo.','Baby Moses was hidden in a basket on the Nile River.',true,'Éxodo / Exodus 1:22; 2:3'],
+ ['La hija del faraón encontró al bebé Moisés en el río.','Pharaoh’s daughter found baby Moses in the river.',true,'Éxodo / Exodus 2:5-6'],
+ ['Dios le habló a Moisés desde una zarza ardiente.','God spoke to Moses from a burning bush.',true,'Éxodo / Exodus 3:2'],
+ ['Dios envió 10 plagas sobre Egipto.','God sent 10 plagues on Egypt.',true,'Éxodo / Exodus 7-12'],
+ ['El mar Rojo nunca se abrió para los israelitas.','The Red Sea never opened up for the Israelites.',false,'Se abrió en dos para que pudieran cruzar.','It split in two so they could cross.','Éxodo / Exodus 14:21'],
+ ['En el desierto, el maná caía del cielo cada mañana.','In the desert, manna fell from the sky every morning.',true,'Éxodo / Exodus 16:14-15'],
+ ['Los israelitas anduvieron 40 años por el desierto.','The Israelites wandered in the desert for 40 years.',true,'Números / Numbers 14:33'],
+ ['Dios le dio a Moisés los 10 mandamientos en el monte Sinaí.','God gave Moses the 10 commandments on Mount Sinai.',true,'Éxodo / Exodus 31:18'],
+ ['Los israelitas hicieron un becerro de oro mientras Moisés estaba en el monte.','The Israelites made a golden calf while Moses was on the mountain.',true,'Éxodo / Exodus 32:4'],
+ ['Moisés mismo guió al pueblo hasta la tierra prometida.','Moses himself led the people into the Promised Land.',false,'Fue Josué quien los guió, después de que Moisés murió.','Joshua led them, after Moses died.','Josué / Joshua 1:1-2']
+]},
+{id:'heroes',ic:'🛡️',t:['Héroes del Antiguo Testamento','Old Testament Heroes'],items:[
+ ['David venció al gigante Goliat con una honda y una piedra.','David defeated the giant Goliath with a sling and a stone.',true,'1 Samuel / 1 Samuel 17:49-50'],
+ ['Daniel fue echado en un foso de leones por orar a Dios.','Daniel was thrown into a den of lions for praying to God.',true,'Daniel / Daniel 6:10-16'],
+ ['Un gran pez se tragó a Jonás.','A huge fish swallowed Jonah.',true,'Jonás / Jonah 1:17'],
+ ['Jonás estuvo dentro del pez por siete días.','Jonah was inside the fish for seven days.',false,'Estuvo tres días.','He was inside for three days.','Jonás / Jonah 1:17'],
+ ['La reina Ester salvó a su pueblo hablando con el rey.','Queen Esther saved her people by speaking to the king.',true,'Ester / Esther 7:3'],
+ ['La fuerza de Sansón estaba ligada a su cabello.','Samson’s strength was tied to his hair.',true,'Jueces / Judges 16:17'],
+ ['Las murallas de Jericó cayeron después de que el pueblo marchó alrededor de la ciudad.','The walls of Jericho fell down after the people marched around the city.',true,'Josué / Joshua 6:20'],
+ ['El rey Salomón le pidió a Dios riquezas en vez de sabiduría.','King Solomon asked God for riches instead of wisdom.',false,'Le pidió sabiduría.','He asked for wisdom.','1 Reyes / 1 Kings 3:9-12'],
+ ['Rut le dijo a su suegra: “A donde tú vayas, iré yo.”','Ruth told her mother-in-law, “Where you go, I will go.”',true,'Rut / Ruth 1:16'],
+ ['Gedeón venció a un ejército enorme con solo 300 hombres.','Gideon defeated a huge army with only 300 men.',true,'Jueces / Judges 7:7']
+]},
+{id:'church',ic:'🔥',t:['La Iglesia Primitiva','The Early Church'],items:[
+ ['En Pentecostés, el Espíritu Santo llenó a los discípulos.','At Pentecost, the Holy Spirit filled the disciples.',true,'Hechos / Acts 2:4'],
+ ['Unas 3,000 personas se bautizaron el día de Pentecostés.','About 3,000 people were baptized on the day of Pentecost.',true,'Hechos / Acts 2:41'],
+ ['Un ángel ayudó a Pedro a escapar de la cárcel.','An angel helped Peter escape from prison.',true,'Hechos / Acts 12:6-10'],
+ ['Pablo antes se llamaba Saulo.','Paul’s name used to be Saul.',true,'Hechos / Acts 13:9'],
+ ['Saulo quedó ciego por tres días después de ver una luz brillante.','Saul was blind for three days after seeing a bright light.',true,'Hechos / Acts 9:9'],
+ ['Pablo y Silas cantaban en la cárcel y hubo un terremoto.','Paul and Silas sang in jail and there was an earthquake.',true,'Hechos / Acts 16:25-26'],
+ ['Esteban fue el primer mártir de la iglesia.','Stephen was the first martyr of the church.',true,'Hechos / Acts 7:55-60'],
+ ['El barco de Pablo nunca tuvo problemas en sus viajes.','Paul’s ship never had any trouble on his journeys.',false,'Su barco naufragó camino a Roma.','It was shipwrecked on the way to Rome.','Hechos / Acts 27:41-44'],
+ ['Lidia vendía telas de color púrpura.','Lydia sold purple cloth.',true,'Hechos / Acts 16:14'],
+ ['Pablo escribió muchas cartas a las iglesias.','Paul wrote many letters to the churches.',true,'Romanos / Romans 1:1-7']
+]}
+];
+
+const DIFF={easy:{time:20},normal:{time:15},hard:{time:10}};
+
+const T={
+ es:{other:'English',newGame:'🔄 Nuevo juego',home:'Inicio',
+  setupTitle:'Preparemos el juego',lang:'Idioma',deck:'Tema',diff:'Dificultad',howMany:'¿Cuántos equipos?',names:'Nombres de los equipos',start:'¡A jugar!',
+  diffs:{easy:['Fácil','Más tiempo para responder'],normal:['Normal','Tiempo estándar'],hard:['Difícil','Menos tiempo para responder']},
+  timerLbl:'Reloj',timerOn:'⏱ Con tiempo',timerOff:'∞ Sin tiempo',
+  pick:n=>`Le toca a: ${n}`,askSaid:n=>`¿Qué dijo ${n}?`,
+  trueB:'✅ Verdadero',falseB:'❌ Falso',
+  correct:'¡Correcto! +100','wrong':'Incorrecto',
+  next:'Siguiente ▶',back:'Volver al inicio',
+  endTitle:'🏆 ¡Fin de la ronda!',tie:'¡Empate! Todos ganan',win:n=>`¡Gana ${n}!`,again:'Jugar otra vez',
+  confirmNew:'¿Empezar un juego nuevo? Se borran los puntos.',yesNew:'Sí, empezar de nuevo',cancel:'Cancelar',backGame:'Volver al juego',
+  defaults:['Pescadores','Pastores','Sabios','Sembradores'],of:(a,b)=>`${a} de ${b}`},
+ en:{other:'Español',newGame:'🔄 New game',home:'Home',
+  setupTitle:'Set up the game',lang:'Language',deck:'Topic',diff:'Difficulty',howMany:'How many teams?',names:'Team names',start:'Let’s play!',
+  diffs:{easy:['Easy','More time to answer'],normal:['Normal','Standard time'],hard:['Hard','Less time to answer']},
+  timerLbl:'Timer',timerOn:'⏱ Timed',timerOff:'∞ No timer',
+  pick:n=>`${n}’s turn`,askSaid:n=>`What did ${n} say?`,
+  trueB:'✅ True',falseB:'❌ False',
+  correct:'Correct! +100','wrong':'Wrong',
+  next:'Next ▶',back:'Back to hub',
+  endTitle:'🏆 Round over!',tie:'It’s a tie! Everybody wins',win:n=>`${n} wins!`,again:'Play again',
+  confirmNew:'Start a new game? Scores will be cleared.',yesNew:'Yes, start over',cancel:'Cancel',backGame:'Back to the game',
+  defaults:['Fishers','Shepherds','Wise Ones','Sowers'],of:(a,b)=>`${a} of ${b}`}
+};
+
+const KEY='bible-true-false-v1';
+function detectLang(){
+  const n=((navigator.language||navigator.userLanguage||'es')+'').toLowerCase();
+  return n.startsWith('en')?'en':'es';
+}
+let timer=null;
+let S={lang:detectLang(),deck:0,diff:'normal',timer:true,teams:[],order:[],idx:0,turn:0,started:false,current:null};
+try{const s=JSON.parse(localStorage.getItem(KEY)||'null');if(s&&s.teams)S=Object.assign(S,s);}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+const $=id=>document.getElementById(id);
+const t=k=>T[S.lang][k];
+const E=()=>S.lang==='en'?1:0;
+const DK=()=>DECKS[S.deck]||DECKS[0];
+const D=()=>DIFF[S.diff]||DIFF.normal;
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function shuffled(n){const a=[...Array(n).keys()];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function chip(id,str){const i=str.indexOf(' '),el=$(id);el.textContent=str;el.title=str.slice(i+1);}
+
+function render(){
+  const e=E();
+  document.documentElement.lang=S.lang;
+  document.title=S.lang==='en'?'True or False':'Verdadero o Falso';
+  $('title').textContent=S.lang==='en'?'True or False':'Verdadero o Falso';
+  $('homeTxt').textContent=t('home');
+  chip('langBtn','🌐 '+t('other'));
+  chip('timeBtn',S.timer?t('timerOn'):t('timerOff'));
+  chip('newBtn',t('newGame'));
+  const tm=S.teams[S.turn];
+  $('turn').innerHTML=tm?`<span class="dot" style="--c:${TEAM_COLORS[S.turn]}"></span><span>${esc(t('pick')(tm.name))}</span>`:'';
+  $('turn').style.visibility=tm?'visible':'hidden';
+  renderScores();
+  renderStage();
+  $('sov').classList.toggle('on',!S.started);
+}
+function renderScores(){
+  document.documentElement.style.setProperty('--n',S.teams.length||2);
+  $('scores').style.setProperty('--n',S.teams.length||2);
+  $('scores').innerHTML=S.teams.map((tm,i)=>`
+   <div class="team ${i===S.turn?'now':''}">
+     <div class="sw" style="--c:${TEAM_COLORS[i]}"></div>
+     <div class="nm">${esc(tm.name)}</div>
+     <div class="pt">${tm.score}</div>
+     <div class="adj">
+       <button onclick="adj(${i},100)">+100</button>
+       <button onclick="adj(${i},-100)">-100</button>
+     </div>
+   </div>`).join('');
+}
+function adj(i,n){S.teams[i].score+=n;save();renderScores();}
+
+function renderStage(){
+  if(!S.started){$('stage').innerHTML='';return;}
+  if(S.idx>=S.order.length){showEnd();return;}
+  const e=E(),it=DK().items[S.order[S.idx]];
+  const tm=S.teams[S.turn];
+  const answered=S.current&&S.current.i===S.order[S.idx];
+  clearTimer();
+  $('stage').innerHTML=`
+   <div class="card">
+     <div class="qhead">
+       <span class="tag">${DK().ic} ${esc(DK().t[e])}</span>
+       <span class="tag">${t('of')(S.idx+1,S.order.length)}</span>
+     </div>
+     <div class="who">${esc(t('askSaid')(tm?tm.name:'')) }</div>
+     ${S.timer&&!answered?'<div class="timer"><i id="bar"></i></div>':''}
+     <p class="stmt">${esc(it[e])}</p>
+     <div class="tf">
+       <button class="tfbtn t" id="tBtn" ${answered?'disabled':''} onclick="mark(true)">${t('trueB')}</button>
+       <button class="tfbtn f" id="fBtn" ${answered?'disabled':''} onclick="mark(false)">${t('falseB')}</button>
+     </div>
+     ${answered?`<p class="result ${S.current.ok?'ok':'no'}">${S.current.ok?t('correct'):t('wrong')}</p>
+     <div class="ans on"><div class="t">${it[2]?('✅ '+t('trueB').slice(2)):('❌ '+t('falseB').slice(2))}</div>${it[3+e]?`<div class="r">${esc(it[3+e])}</div>`:''}</div>
+     <div class="row"><button class="btn g" onclick="nextTurn()">${t('next')}</button></div>`:''}
+   </div>`;
+  if(S.timer&&!answered)startTimer();
+}
+function clearTimer(){if(timer){clearInterval(timer);timer=null;}}
+function startTimer(){
+  const secs=D().time;let left=secs;const bar=$('bar');
+  if(!bar)return;
+  timer=setInterval(()=>{
+    left-=.1;
+    bar.style.width=Math.max(0,left/secs*100)+'%';
+    if(left<=0){clearTimer();mark(null);}
+  },100);
+}
+function mark(guess){
+  clearTimer();
+  const it=DK().items[S.order[S.idx]];
+  const ok=guess===it[2];
+  if(ok)S.teams[S.turn].score+=100;
+  S.current={i:S.order[S.idx],ok};
+  save();render();
+}
+function nextTurn(){
+  S.idx++;S.turn=(S.turn+1)%S.teams.length;S.current=null;save();render();
+}
+function showEnd(){
+  $('stage').innerHTML='';
+  const max=Math.max(...S.teams.map(tm=>tm.score));
+  const winners=S.teams.filter(tm=>tm.score===max);
+  const ranked=[...S.teams].sort((a,b)=>b.score-a.score);
+  $('ecard').innerHTML=`
+   <h2>${t('endTitle')}</h2>
+   <p style="font-weight:900;font-size:1.2rem;margin-top:10px">${winners.length>1?t('tie'):t('win')(winners[0].name)}</p>
+   <ul class="rank">${ranked.map(tm=>`<li><span>${esc(tm.name)}</span><span>${tm.score}</span></li>`).join('')}</ul>
+   <div class="row"><button class="btn g" onclick="closeEnd();openSetup()">${t('again')}</button></div>`;
+  $('eov').classList.add('on');
+}
+function closeEnd(){$('eov').classList.remove('on');}
+
+/* ---------- configuración ---------- */
+function openSetup(){
+  S.started=false;
+  save();
+  const e=E();
+  const n=S.teams.length||2;
+  const names=S.teams.length?S.teams.map(tm=>tm.name):T[S.lang].defaults.slice(0,n);
+  $('scard').innerHTML=`
+   <h2>⚡ ${t('setupTitle')}</h2>
+   <span class="lbl">${t('lang')}</span>
+   <div class="pick" id="pLang">
+     <button data-v="es" class="${S.lang==='es'?'sel':''}">Español</button>
+     <button data-v="en" class="${S.lang==='en'?'sel':''}">English</button>
+   </div>
+   <span class="lbl">${t('deck')}</span>
+   <div class="pick decks" id="pDeck">
+    ${DECKS.map((d,i)=>`<button data-v="${i}" class="${S.deck===i?'sel':''}"><span class="ti">${d.ic}</span><span>${esc(d.t[e])}</span></button>`).join('')}
+   </div>
+   <span class="lbl">${t('diff')}</span>
+   <div class="pick" id="pDiff">
+    ${['easy','normal','hard'].map(k=>`<button data-v="${k}" class="${S.diff===k?'sel':''}">${esc(t('diffs')[k][0])}<small>${esc(t('diffs')[k][1])}</small></button>`).join('')}
+   </div>
+   <span class="lbl">${t('timerLbl')}</span>
+   <div class="pick" id="pTimer">
+     <button data-v="1" class="${S.timer?'sel':''}">${t('timerOn')}</button>
+     <button data-v="0" class="${!S.timer?'sel':''}">${t('timerOff')}</button>
+   </div>
+   <span class="lbl">${t('howMany')}</span>
+   <div class="pick" id="pNum">
+    ${[2,3,4].map(x=>`<button class="num ${n===x?'sel':''}" data-v="${x}">${x}</button>`).join('')}
+   </div>
+   <span class="lbl">${t('names')}</span>
+   <div class="names" id="pNames">
+    ${names.map((nm,i)=>`<input value="${esc(nm)}" data-i="${i}" style="border-color:${TEAM_COLORS[i]}">`).join('')}
+   </div>
+   <div class="row"><button class="btn g" id="startBtn">${t('start')}</button></div>`;
+  wireSetup(n);
+  $('sov').classList.add('on');
+}
+function wireSetup(n){
+  $('pLang').onclick=ev=>{const b=ev.target.closest('button');if(!b)return;S.lang=b.dataset.v;openSetup();};
+  $('pDeck').onclick=ev=>{const b=ev.target.closest('button');if(!b)return;S.deck=+b.dataset.v;openSetup();};
+  $('pDiff').onclick=ev=>{const b=ev.target.closest('button');if(!b)return;S.diff=b.dataset.v;openSetup();};
+  $('pTimer').onclick=ev=>{const b=ev.target.closest('button');if(!b)return;S.timer=b.dataset.v==='1';openSetup();};
+  $('pNum').onclick=ev=>{
+    const b=ev.target.closest('button');if(!b)return;
+    const newN=+b.dataset.v;
+    const cur=[...document.querySelectorAll('#pNames input')].map(i=>i.value);
+    S.teams=Array.from({length:newN},(_,i)=>({name:cur[i]||T[S.lang].defaults[i],score:0}));
+    openSetup();
+  };
+  $('startBtn').onclick=()=>{
+    const inputs=[...document.querySelectorAll('#pNames input')];
+    S.teams=inputs.map((inp,i)=>({name:(inp.value||T[S.lang].defaults[i]).trim(),score:0}));
+    S.order=shuffled(DK().items.length);
+    S.idx=0;S.turn=0;S.current=null;S.started=true;
+    save();render();
+  };
+}
+
+$('langBtn').onclick=()=>{S.lang=S.lang==='en'?'es':'en';save();render();};
+$('timeBtn').onclick=()=>{S.timer=!S.timer;save();render();};
+$('newBtn').onclick=()=>{
+  $('ccard').innerHTML=`<p style="font-weight:900;font-size:1.2rem">${t('confirmNew')}</p>
+   <div class="row"><button class="btn r" id="yesNew">${t('yesNew')}</button><button class="btn ghost" id="noNew">${t('cancel')}</button></div>`;
+  $('cov').classList.add('on');
+  $('yesNew').onclick=()=>{$('cov').classList.remove('on');openSetup();};
+  $('noNew').onclick=()=>{$('cov').classList.remove('on');};
+};
+
+if(!S.teams.length){
+  S.teams=T[S.lang].defaults.slice(0,2).map(n=>({name:n,score:0}));
+}
+render();
+if(!S.started){openSetup();}
+</script>
+</body>
+</html>

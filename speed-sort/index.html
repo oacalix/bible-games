@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Speed Sort Bible Game (Carrera de Clasificación) · Bible Games</title>
+<meta name="description" content="Teams race to sort bilingual Bible statements into the right category: the Persons of the Trinity, or the Five Forms of Prayer. A kinesthetic Catholic classroom game.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://oacalix.github.io/bible-games/speed-sort/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%97%82%EF%B8%8F%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Speed Sort · Bible Games">
+<meta property="og:description" content="Teams race to sort bilingual Bible statements into the right category: the Trinity, or the Five Forms of Prayer.">
+<meta property="og:url" content="https://oacalix.github.io/bible-games/speed-sort/">
+<meta property="og:image" content="https://oacalix.github.io/bible-games/screenshots/sc2.png">
+<meta property="og:locale" content="es_ES">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Speed Sort · Bible Games">
+<meta name="twitter:description" content="Teams race to sort bilingual Bible statements into the right category.">
+<meta name="twitter:image" content="https://oacalix.github.io/bible-games/screenshots/sc2.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bungee&family=Nunito:ital,wght@0,600;0,800;0,900;1,600&display=swap" rel="stylesheet">
+<script src="../analytics.js" defer></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Speed Sort",
+  "alternateName": "Carrera de Clasificación",
+  "url": "https://oacalix.github.io/bible-games/speed-sort/",
+  "applicationCategory": "GameApplication",
+  "operatingSystem": "Any (web browser)",
+  "description": "Teams race to sort bilingual Bible statements into the right category: the Persons of the Trinity, or the Five Forms of Prayer.",
+  "inLanguage": ["es", "en"],
+  "isAccessibleForFree": true,
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" },
+  "audience": { "@type": "EducationalAudience", "educationalRole": "student" },
+  "author": { "@type": "Person", "name": "Oscar Calix", "url": "https://otdev.io/" },
+  "isPartOf": { "@id": "https://oacalix.github.io/bible-games/#website" }
+}
+</script>
+<style>
+:root{
+  --sky:#2fa8de; --ink:#1b1f3b; --soft:#4b5170;
+  --yel:#ffd23f; --grn:#3ddc84; --org:#ff8c42; --pnk:#ff6b9a; --pur:#9b72f2; --red:#ff4d4d;
+  --disp:'Bungee','Arial Black',Impact,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --sky:#1f86b8; } }
+:root[data-theme="dark"]{ --sky:#1f86b8; }
+*,*::before,*::after{box-sizing:border-box}
+html{height:100%}
+body{margin:0;height:100%;overflow:hidden;color:var(--ink);font-family:'Nunito',system-ui,'Segoe UI',Arial,sans-serif;font-weight:600;
+  background-color:var(--sky);
+  background-image:repeating-conic-gradient(from 0deg at 50% -10%, rgba(255,255,255,.10) 0deg 8deg, transparent 8deg 16deg)}
+button{font-family:inherit;cursor:pointer;color:var(--ink)}
+button:focus-visible{outline:4px solid var(--yel);outline-offset:3px}
+a.back{color:#fff;font-weight:900;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+
+.app{height:100%;display:flex;flex-direction:column;gap:1.4vh;padding:1.6vh 1.6vw}
+header{display:flex;align-items:center;gap:1.2vw;flex:none;flex-wrap:wrap}
+h1{margin:0;font-family:var(--disp);font-weight:400;color:#fff;line-height:1;flex:0 1 auto;max-width:38%;
+  font-size:clamp(1rem,min(2.6vw,4.4vh),2.6rem);text-shadow:3px 3px 0 var(--ink)}
+.turn{flex:1;min-width:0;display:flex;align-items:center;gap:10px;background:#fff;border:4px solid var(--ink);border-radius:12px;
+  box-shadow:4px 4px 0 var(--ink);padding:.8vh 14px;font-weight:900;font-size:clamp(.9rem,min(1.6vw,2.7vh),1.5rem);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.turn .dot{width:1.2em;height:1.2em;border-radius:50%;border:3px solid var(--ink);background:var(--c);flex:none}
+.ctrls{display:flex;gap:8px;flex:none;flex-wrap:wrap}
+.chip{background:#fff;border:3px solid var(--ink);border-radius:10px;padding:.7vh 12px;font-weight:800;font-size:clamp(.8rem,min(1.1vw,2vh),1.05rem);box-shadow:3px 3px 0 var(--ink);white-space:nowrap;display:inline-flex;align-items:center;gap:6px}
+.chip:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
+
+.stage{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;padding:1vh 0}
+.card{background:#fff;border:5px solid var(--ink);border-radius:18px;box-shadow:10px 10px 0 var(--ink);
+  max-width:900px;width:100%;max-height:100%;overflow:auto;padding:clamp(18px,3.5vh,34px) clamp(18px,3.5vw,38px);animation:pop .22s ease-out}
+@keyframes pop{from{transform:scale(.9) rotate(-1deg);opacity:0}to{transform:none;opacity:1}}
+.qhead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.tag{background:var(--c);border:3px solid var(--ink);border-radius:999px;padding:4px 12px;font-weight:900}
+.who{margin:14px 0 0;display:flex;align-items:center;gap:10px;background:var(--c);border:3px solid var(--ink);border-radius:12px;padding:8px 14px;font-weight:900;font-size:clamp(1.05rem,min(2.4vw,3.4vh),1.6rem)}
+.timer{height:14px;border:3px solid var(--ink);border-radius:999px;overflow:hidden;background:#eef2f7;margin-top:14px}
+.timer i{display:block;height:100%;width:100%;background:var(--grn);transition:width .1s linear}
+.stmt{margin:2.2vh 0 1.6vh;font-weight:900;font-size:clamp(1.3rem,min(3.4vw,5.2vh),2.6rem);line-height:1.3;text-align:center}
+.buckets{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin:1.8vh 0}
+.bkt{border:4px solid var(--ink);border-radius:14px;box-shadow:4px 4px 0 var(--ink);padding:16px 10px;
+  font-weight:900;font-size:clamp(.95rem,2.2vw,1.25rem);background:#fff;line-height:1.2}
+.bkt:active:not(:disabled){transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+.bkt.ok{background:var(--grn)}
+.bkt.no{background:#ffd6d6;opacity:.8;animation:shake .35s}
+.bkt:disabled{opacity:.55}
+@keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.result{text-align:center;font-family:var(--disp);font-size:clamp(1.2rem,3.4vw,1.8rem);margin:6px 0 0}
+.result.ok{color:#1c8a4e} .result.no{color:#c92b2b}
+.row{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.btn{border:3px solid var(--ink);border-radius:12px;box-shadow:4px 4px 0 var(--ink);padding:10px 18px;font-size:clamp(1rem,min(1.6vw,2.6vh),1.35rem);font-weight:900;background:#fff}
+.btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+.btn.g{background:var(--grn)} .btn.y{background:var(--yel)} .btn.r{background:var(--red);color:#fff} .btn.p{background:var(--pur);color:#fff}
+.btn.ghost{box-shadow:none;border-style:dashed;margin-left:auto}
+
+.scores{flex:none;display:grid;grid-template-columns:repeat(var(--n,2),minmax(0,1fr));gap:1.2vw}
+.team{background:#fff;border:4px solid var(--ink);border-radius:12px;box-shadow:4px 4px 0 var(--ink);
+  padding:.6vh 12px;display:flex;align-items:center;gap:10px}
+.team .sw{width:14px;align-self:stretch;border-radius:6px;background:var(--c);border:2px solid var(--ink);flex:none}
+.team .nm{flex:1;min-width:0;font-weight:900;font-size:clamp(.85rem,min(1.4vw,2.4vh),1.3rem);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.team .pt{font-family:var(--disp);font-size:clamp(1.1rem,min(2.4vw,4vh),2.4rem)}
+.team .adj{display:flex;flex-direction:column;gap:2px}
+.team .adj button{background:#fff;border:2px solid var(--ink);border-radius:6px;font-size:.68rem;font-weight:800;padding:0 5px;line-height:1.3}
+.team.now{background:var(--c)}
+
+.overlay{position:fixed;inset:0;background:rgba(27,31,59,.78);display:none;align-items:center;justify-content:center;
+  padding:calc(2vh + env(safe-area-inset-top,0px)) 2vw calc(2vh + env(safe-area-inset-bottom,0px));z-index:10}
+.overlay.on{display:flex}
+.setup h2,.end h2{margin:0;font-family:var(--disp);font-weight:400;font-size:clamp(1.4rem,4vw,2.2rem)}
+.setup .lbl{display:block;margin:18px 0 8px;font-weight:900;font-size:1.1rem}
+.pick{display:flex;gap:8px;flex-wrap:wrap}
+.pick button{background:#fff;border:3px solid var(--ink);border-radius:10px;padding:8px 14px;font-weight:900;font-size:1.05rem;box-shadow:3px 3px 0 var(--ink);text-align:left}
+.pick button small{display:block;font-weight:600;font-size:.82rem;color:var(--soft)}
+.pick button.sel{background:var(--yel)}
+.pick button.num{font-family:var(--disp);font-weight:400;font-size:1.3rem;padding:6px 18px}
+.decks{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}
+.decks button{display:flex;align-items:center;gap:10px}
+.decks .ti{font-size:1.8rem}
+.decks small{display:block;font-weight:600;font-size:.8rem;color:var(--soft)}
+.names{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px}
+.names input{width:100%;font-family:inherit;font-weight:800;font-size:1.1rem;padding:10px 12px;border-radius:10px;border:3px solid var(--ink);background:var(--c)}
+.rank{list-style:none;padding:0;margin:16px 0}
+.rank li{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border:3px solid var(--ink);border-radius:10px;margin-bottom:8px;font-weight:900;font-size:1.2rem;background:#fff}
+.rank li span:last-child{font-family:var(--disp)}
+.rank li:first-child{background:var(--c);font-size:1.5rem;box-shadow:4px 4px 0 var(--ink)}
+
+@media (max-width:700px){
+  body{overflow:auto;height:auto;min-height:100%}
+  .app{height:auto;padding:10px 10px 0;gap:10px}
+  h1{max-width:none;flex:1 1 0;font-size:1.3rem}
+  .chip{padding:6px 9px;font-size:1rem;box-shadow:2px 2px 0 var(--ink)}
+  .turn{flex-basis:100%;white-space:normal;font-size:1rem;padding:8px 12px;box-shadow:3px 3px 0 var(--ink)}
+  .stmt{font-size:1.3rem}
+  .buckets{grid-template-columns:repeat(2,1fr)}
+  .scores{position:sticky;bottom:0;z-index:5;margin:6px -10px 0;padding:10px 10px calc(10px + env(safe-area-inset-bottom,0px));
+    background:var(--sky);border-top:4px solid var(--ink);grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .team{padding:6px 8px;gap:6px;border-width:3px;box-shadow:3px 3px 0 var(--ink);flex-wrap:wrap;row-gap:4px}
+  .team .sw{display:none}
+  .team .nm{flex-basis:100%;font-size:.95rem;border-bottom:3px solid var(--c);padding-bottom:2px}
+  .team .pt{flex:1;font-size:1.2rem}
+  .team .adj{flex-direction:row}
+  .team.now .nm{border-color:var(--ink)}
+  .names{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){ *{animation:none!important;transition:none!important} }
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <h1 id="title"></h1>
+    <div class="turn" id="turn"></div>
+    <div class="ctrls">
+      <a class="chip back" href="../" id="homeBtn">🏠 <span id="homeTxt"></span></a>
+      <button class="chip" id="langBtn"></button>
+      <button class="chip" id="timeBtn"></button>
+      <button class="chip" id="newBtn"></button>
+    </div>
+  </header>
+  <div class="stage" id="stage"></div>
+  <div class="scores" id="scores"></div>
+</div>
+
+<div class="overlay" id="sov"><div class="card setup" id="scard"></div></div>
+<div class="overlay" id="eov"><div class="card end" id="ecard"></div></div>
+<div class="overlay" id="cov"><div class="card" id="ccard"></div></div>
+
+<script>
+const TEAM_COLORS=['#ffd23f','#ff6b9a','#3ddc84','#9b72f2'];
+const BUCKET_COLORS=['#ffd23f','#3ddc84','#ff8c42','#ff6b9a','#9b72f2'];
+/* Formato de cada tarjeta: [texto ES, texto EN, índiceDeCubeta, nota/ref (opcional)] */
+const DECKS=[
+{id:'trinity',ic:'✝️',t:['Personas de la Trinidad','Persons of the Trinity'],
+ buckets:[['Padre','Father'],['Hijo','Son'],['Espíritu Santo','Holy Spirit']],
+ items:[
+  ['Creó todo el universo por amor.','Created the whole universe out of love.',0,'CCC#290-293'],
+  ['Se hizo hombre y vivió entre nosotros.','Became man and lived among us.',1,'Juan / John 1:14'],
+  ['Ayuda a las personas a creer en Dios.','Helps people believe in God.',2,'CCC#183'],
+  ['Envió a su Hijo al mundo.','Sent his Son into the world.',0,'CCC#479; 620; 733'],
+  ['Enseñó el Padre Nuestro a sus discípulos.','Taught his disciples the Our Father.',1,'Mateo / Matthew 6:9-13'],
+  ['Es el Abogado, ayudador y guía.','Is the Advocate, helper, and guide.',2,'CCC#91; 243; 747'],
+  ['Ama a las personas como un padre y una madre.','Loves people like a father and a mother.',0,'CCC#231; 239'],
+  ['Resucitó al tercer día.','Rose again on the third day.',1,'Lucas / Luke 24:6-7'],
+  ['Es el Don (regalo) del Padre y del Hijo.','Is the Gift of the Father and the Son.',2,'CCC#638; 658; 988-90']
+ ]},
+{id:'forms',ic:'🙏',t:['Las Cinco Formas de Oración','The Five Forms of Prayer'],
+ buckets:[['Bendición y Adoración','Blessing & Adoration'],['Petición','Petition'],['Intercesión','Intercession'],['Acción de Gracias','Thanksgiving'],['Alabanza','Praise']],
+ items:[
+  ['"Dios mío, gracias por mi familia y mi comida."','"God, thank you for my family and my food."',3],
+  ['"Por favor, Dios, ayúdame a aprobar mi examen."','"Please, God, help me pass my test."',1],
+  ['"Oremos por los enfermos del hospital."','"Let’s pray for the sick people in the hospital."',2],
+  ['"¡Santo, Santo, Santo es el Señor!"','"Holy, Holy, Holy is the Lord!"',4],
+  ['"Te alabamos porque eres bueno, no solo por lo que nos das."','"We praise you because you are good, not only for what you give us."',0],
+  ['"Señor, por favor cuida a mi abuela que está enferma."','"Lord, please take care of my grandma who is sick."',2],
+  ['"Gracias, Dios, por este hermoso día."','"Thank you, God, for this beautiful day."',3],
+  ['"Dios, ayúdame a ser más paciente."','"God, help me be more patient."',1],
+  ['"Alabado seas, mi Señor."','"Praised be you, my Lord."',4,'San Francisco de Asís / St. Francis of Assisi'],
+  ['"Nos arrodillamos para adorarte, Señor."','"We kneel to adore you, Lord."',0]
+ ]},
+{id:'miracle',ic:'✨',t:['¿Milagro o Parábola?','Miracle or Parable?'],
+ buckets:[['Milagro','Miracle'],['Parábola','Parable']],
+ items:[
+  ['Convirtió el agua en vino en una boda.','Turned water into wine at a wedding.',0,'Juan / John 2:1-11'],
+  ['Alimentó a unas 5,000 personas con cinco panes y dos peces.','Fed about 5,000 people with five loaves and two fish.',0,'Mateo / Matthew 14:21'],
+  ['Caminó sobre el agua durante una tormenta.','Walked on water during a storm.',0,'Mateo / Matthew 14:25'],
+  ['Llamó a su amigo Lázaro para que saliera de la tumba después de 4 días.','Called his friend Lazarus out of the tomb after 4 days.',0,'Juan / John 11:39-44'],
+  ['Calmó una tormenta en el mar de Galilea.','Calmed a storm on the Sea of Galilee.',0,'Marcos / Mark 4:35-41'],
+  ['Un pastor dejó 99 ovejas para buscar a la que se había perdido.','A shepherd left 99 sheep to search for the one that was lost.',1,'Lucas / Luke 15:4-6'],
+  ['Un hombre construyó su casa sobre la roca en vez de la arena.','A man built his house on the rock instead of the sand.',1,'Mateo / Matthew 7:24-27'],
+  ['Un hijo malgastó su herencia y al volver a casa le hicieron una gran fiesta.','A son wasted his inheritance and came home to a big party.',1,'Lucas / Luke 15:15-24'],
+  ['Un samaritano se detuvo a ayudar a un hombre herido en el camino.','A Samaritan stopped to help an injured man on the road.',1,'Lucas / Luke 10:30-35'],
+  ['Una semillita de mostaza crece hasta convertirse en un árbol grande.','A tiny mustard seed grows into a big tree.',1,'Mateo / Matthew 13:31-32']
+ ]},
+{id:'testament',ic:'📜',t:['¿Antiguo o Nuevo Testamento?','Old or New Testament?'],
+ buckets:[['Antiguo Testamento','Old Testament'],['Nuevo Testamento','New Testament']],
+ items:[
+  ['Moisés guió a los israelitas fuera de Egipto.','Moses led the Israelites out of Egypt.',0,'Éxodo / Exodus'],
+  ['David venció al gigante Goliat.','David defeated the giant Goliath.',0,'1 Samuel / 1 Samuel'],
+  ['Noé construyó un arca antes del diluvio.','Noah built an ark before the flood.',0,'Génesis / Genesis'],
+  ['Daniel fue echado en un foso de leones.','Daniel was thrown into a den of lions.',0,'Daniel / Daniel'],
+  ['La reina Ester salvó a su pueblo.','Queen Esther saved her people.',0,'Ester / Esther'],
+  ['Jesús enseñó el Padre Nuestro a sus discípulos.','Jesus taught the Lord’s Prayer to his disciples.',1,'Mateo / Matthew 6:9-13'],
+  ['Pablo viajó a muchas ciudades para hablar de Jesús.','Paul traveled to many cities telling people about Jesus.',1,'Hechos / Acts'],
+  ['El Espíritu Santo llenó a los discípulos en Pentecostés.','The Holy Spirit filled the disciples at Pentecost.',1,'Hechos / Acts 2:4'],
+  ['Pedro sanó en el templo a un hombre que no podía caminar.','Peter healed a man who could not walk, at the temple.',1,'Hechos / Acts 3:2-8'],
+  ['María y José viajaron a Belén antes de que naciera Jesús.','Mary and Joseph traveled to Bethlehem before Jesus was born.',1,'Lucas / Luke 2:4-7']
+ ]}
+];
+
+const DIFF={easy:{time:20},normal:{time:15},hard:{time:10}};
+
+const T={
+ es:{other:'English',newGame:'🔄 Nuevo juego',home:'Inicio',
+  setupTitle:'Preparemos el juego',lang:'Idioma',deck:'Categorías',diff:'Dificultad',howMany:'¿Cuántos equipos?',names:'Nombres de los equipos',start:'¡A jugar!',
+  diffs:{easy:['Fácil','Más tiempo para responder'],normal:['Normal','Tiempo estándar'],hard:['Difícil','Menos tiempo para responder']},
+  timerLbl:'Reloj',timerOn:'⏱ Con tiempo',timerOff:'∞ Sin tiempo',
+  pick:n=>`Le toca a: ${n}`,sortIt:'¿En qué categoría va esto?',
+  correct:'¡Correcto! +100','wrong':'Incorrecto',
+  next:'Siguiente ▶',
+  endTitle:'🏆 ¡Fin de la ronda!',tie:'¡Empate! Todos ganan',win:n=>`¡Gana ${n}!`,again:'Jugar otra vez',
+  confirmNew:'¿Empezar un juego nuevo? Se borran los puntos.',yesNew:'Sí, empezar de nuevo',cancel:'Cancelar',
+  defaults:['Pescadores','Pastores','Sabios','Sembradores'],of:(a,b)=>`${a} de ${b}`},
+ en:{other:'Español',newGame:'🔄 New game',home:'Home',
+  setupTitle:'Set up the game',lang:'Language',deck:'Categories',diff:'Difficulty',howMany:'How many teams?',names:'Team names',start:'Let’s play!',
+  diffs:{easy:['Easy','More time to answer'],normal:['Normal','Standard time'],hard:['Hard','Less time to answer']},
+  timerLbl:'Timer',timerOn:'⏱ Timed',timerOff:'∞ No timer',
+  pick:n=>`${n}’s turn`,sortIt:'Which category does this go in?',
+  correct:'Correct! +100','wrong':'Wrong',
+  next:'Next ▶',
+  endTitle:'🏆 Round over!',tie:'It’s a tie! Everybody wins',win:n=>`${n} wins!`,again:'Play again',
+  confirmNew:'Start a new game? Scores will be cleared.',yesNew:'Yes, start over',cancel:'Cancel',
+  defaults:['Fishers','Shepherds','Wise Ones','Sowers'],of:(a,b)=>`${a} of ${b}`}
+};
+
+const KEY='bible-speed-sort-v1';
+function detectLang(){
+  const n=((navigator.language||navigator.userLanguage||'es')+'').toLowerCase();
+  return n.startsWith('en')?'en':'es';
+}
+let timer=null;
+let S={lang:detectLang(),deck:0,diff:'normal',timer:true,teams:[],order:[],idx:0,turn:0,started:false,current:null};
+try{const s=JSON.parse(localStorage.getItem(KEY)||'null');if(s&&s.teams)S=Object.assign(S,s);}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
+const $=id=>document.getElementById(id);
+const t=k=>T[S.lang][k];
+const E=()=>S.lang==='en'?1:0;
+const DK=()=>DECKS[S.deck]||DECKS[0];
+const D=()=>DIFF[S.diff]||DIFF.normal;
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function shuffled(n){const a=[...Array(n).keys()];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function chip(id,str){$(id).textContent=str;$(id).title=str.slice(str.indexOf(' ')+1);}
+
+function render(){
+  const e=E();
+  document.documentElement.lang=S.lang;
+  document.title=S.lang==='en'?'Speed Sort':'Carrera de Clasificación';
+  $('title').textContent=S.lang==='en'?'Speed Sort':'Carrera de Clasificación';
+  $('homeTxt').textContent=t('home');
+  chip('langBtn','🌐 '+t('other'));
+  chip('timeBtn',S.timer?t('timerOn'):t('timerOff'));
+  chip('newBtn',t('newGame'));
+  const tm=S.teams[S.turn];
+  $('turn').innerHTML=tm?`<span class="dot" style="--c:${TEAM_COLORS[S.turn]}"></span><span>${esc(t('pick')(tm.name))}</span>`:'';
+  $('turn').style.visibility=tm?'visible':'hidden';
+  renderScores();
+  renderStage();
+  $('sov').classList.toggle('on',!S.started);
+}
+function renderScores(){
+  $('scores').style.setProperty('--n',S.teams.length||2);
+  $('scores').innerHTML=S.teams.map((tm,i)=>`
+   <div class="team ${i===S.turn?'now':''}">
+     <div class="sw" style="--c:${TEAM_COLORS[i]}"></div>
+     <div class="nm">${esc(tm.name)}</div>
+     <div class="pt">${tm.score}</div>
+     <div class="adj">
+       <button onclick="adj(${i},100)">+100</button>
+       <button onclick="adj(${i},-100)">-100</button>
+     </div>
+   </div>`).join('');
+}
+function adj(i,n){S.teams[i].score+=n;save();renderScores();}
+
+function renderStage(){
+  if(!S.started){$('stage').innerHTML='';return;}
+  if(S.idx>=S.order.length){showEnd();return;}
+  const e=E(),dk=DK(),item=dk.items[S.order[S.idx]];
+  const tm=S.teams[S.turn];
+  const answered=S.current&&S.current.i===S.order[S.idx];
+  clearTimer();
+  const bkts=dk.buckets.map((b,bi)=>{
+    let cls='';
+    if(answered){
+      if(bi===item[2])cls='ok';
+      else if(bi===S.current.picked)cls='no';
+    }
+    return `<button class="bkt ${cls}" ${answered?'disabled':''} onclick="mark(${bi})" style="--c:${BUCKET_COLORS[bi%BUCKET_COLORS.length]}">${esc(b[e])}</button>`;
+  }).join('');
+  $('stage').innerHTML=`
+   <div class="card">
+     <div class="qhead">
+       <span class="tag">${dk.ic} ${esc(dk.t[e])}</span>
+       <span class="tag">${t('of')(S.idx+1,S.order.length)}</span>
+     </div>
+     <div class="who">${esc(t('pick')(tm?tm.name:''))}</div>
+     ${S.timer&&!answered?'<div class="timer"><i id="bar"></i></div>':''}
+     <p class="stmt">${esc(item[e])}</p>
+     <p style="text-align:center;font-weight:800;color:var(--soft);margin:0 0 10px">${t('sortIt')}</p>
+     <div class="buckets">${bkts}</div>
+     ${answered?`<p class="result ${S.current.ok?'ok':'no'}">${S.current.ok?t('correct'):t('wrong')}</p>
+     ${item[3]?`<p style="text-align:center;color:var(--soft);font-size:.95rem;margin-top:-8px">📖 ${esc(item[3])}</p>`:''}
+     <div class="row"><button class="btn g" onclick="nextTurn()">${t('next')}</button></div>`:''}
+   </div>`;
+  if(S.timer&&!answered)startTimer();
+}
+function clearTimer(){if(timer){clearInterval(timer);timer=null;}}
+function startTimer(){
+  const secs=D().time;let left=secs;const bar=$('bar');
+  if(!bar)return;
+  timer=setInterval(()=>{
+    left-=.1;
+    bar.style.width=Math.max(0,left/secs*100)+'%';
+    if(left<=0){clearTimer();mark(-1);}
+  },100);
+}
+function mark(bi){
+  clearTimer();
+  const item=DK().items[S.order[S.idx]];
+  const ok=bi===item[2];
+  if(ok)S.teams[S.turn].score+=100;
+  S.current={i:S.order[S.idx],ok,picked:bi};
+  save();render();
+}
+function nextTurn(){
+  S.idx++;S.turn=(S.turn+1)%S.teams.length;S.current=null;save();render();
+}
+function showEnd(){
+  $('stage').innerHTML='';
+  const max=Math.max(...S.teams.map(tm=>tm.score));
+  const winners=S.teams.filter(tm=>tm.score===max);
+  const ranked=[...S.teams].sort((a,b)=>b.score-a.score);
+  $('ecard').innerHTML=`
+   <h2>${t('endTitle')}</h2>
+   <p style="font-weight:900;font-size:1.2rem;margin-top:10px">${winners.length>1?t('tie'):t('win')(winners[0].name)}</p>
+   <ul class="rank">${ranked.map(tm=>`<li><span>${esc(tm.name)}</span><span>${tm.score}</span></li>`).join('')}</ul>
+   <div class="row"><button class="btn g" onclick="closeEnd();openSetup()">${t('again')}</button></div>`;
+  $('eov').classList.add('on');
+}
+function closeEnd(){$('eov').classList.remove('on');}
+
+/* ---------- configuración ---------- */
+function openSetup(){
+  S.started=false;
+  save();
+  const e=E();
+  const n=S.teams.length||2;
+  const names=S.teams.length?S.teams.map(tm=>tm.name):T[S.lang].defaults.slice(0,n);
+  $('scard').innerHTML=`
+   <h2>🗂️ ${t('setupTitle')}</h2>
+   <span class="lbl">${t('lang')}</span>
+   <div class="pick" id="pLang">
+     <button data-v="es" class="${S.lang==='es'?'sel':''}">Español</button>
+     <button data-v="en" class="${S.lang==='en'?'sel':''}">English</button>
+   </div>
+   <span class="lbl">${t('deck')}</span>
+   <div class="pick decks" id="pDeck">
+    ${DECKS.map((d,i)=>`<button data-v="${i}" class="${S.deck===i?'sel':''}"><span class="ti">${d.ic}</span><span>${esc(d.t[e])}<small>${d.buckets.length} ${S.lang==='en'?'buckets':'categorías'}</small></span></button>`).join('')}
+   </div>
+   <span class="lbl">${t('diff')}</span>
+   <div class="pick" id="pDiff">
+    ${['easy','normal','hard'].map(k=>`<button data-v="${k}" class="${S.diff===k?'sel':''}">${esc(t('diffs')[k][0])}<small>${esc(t('diffs')[k][1])}</small></button>`).join('')}
+   </div>
+   <span class="lbl">${t('timerLbl')}</span>
+   <div class="pick" id="pTimer">
+     <button data-v="1" class="${S.timer?'sel':''}">${t('timerOn')}</button>
+     <button data-v="0" class="${!S.timer?'sel':''}">${t('timerOff')}</button>
+   </div>
+   <span class="lbl">${t('howMany')}</span>
+   <div class="pick" id="pNum">
+    ${[2,3,4].map(x=>`<button class="num ${n===x?'sel':''}" data-v="${x}">${x}</button>`).join('')}
+   </div>
+   <span class="lbl">${t('names')}</span>
+   <div class="names" id="pNames">
+    ${names.map((nm,i)=>`<input value="${esc(nm)}" data-i="${i}" style="border-color:${TEAM_COLORS[i]}">`).join('')}
+   </div>
+   <div class="row"><button class="btn g" id="startBtn">${t('start')}</button></div>`;
+  wireSetup(n);
+  $('sov').classList.add('on');
+}
+function wireSetup(n){
+  $('pLang').onclick=ev=>{const b=ev.target.closest('button');if(!b)return;S.lang=b.dataset.v;openSetup();};
+  $('pDeck').onclick=ev=>{const b=ev.target.closest('button');if(!b)return;S.deck=+b.dataset.v;openSetup();};
+  $('pDiff').onclick=ev=>{const b=ev.target.closest('button');if(!b)return;S.diff=b.dataset.v;openSetup();};
+  $('pTimer').onclick=ev=>{const b=ev.target.closest('button');if(!b)return;S.timer=b.dataset.v==='1';openSetup();};
+  $('pNum').onclick=ev=>{
+    const b=ev.target.closest('button');if(!b)return;
+    const newN=+b.dataset.v;
+    const cur=[...document.querySelectorAll('#pNames input')].map(i=>i.value);
+    S.teams=Array.from({length:newN},(_,i)=>({name:cur[i]||T[S.lang].defaults[i],score:0}));
+    openSetup();
+  };
+  $('startBtn').onclick=()=>{
+    const inputs=[...document.querySelectorAll('#pNames input')];
+    S.teams=inputs.map((inp,i)=>({name:(inp.value||T[S.lang].defaults[i]).trim(),score:0}));
+    S.order=shuffled(DK().items.length);
+    S.idx=0;S.turn=0;S.current=null;S.started=true;
+    save();render();
+  };
+}
+
+$('langBtn').onclick=()=>{S.lang=S.lang==='en'?'es':'en';save();render();};
+$('timeBtn').onclick=()=>{S.timer=!S.timer;save();render();};
+$('newBtn').onclick=()=>{
+  $('ccard').innerHTML=`<p style="font-weight:900;font-size:1.2rem">${t('confirmNew')}</p>
+   <div class="row"><button class="btn r" id="yesNew">${t('yesNew')}</button><button class="btn ghost" id="noNew">${t('cancel')}</button></div>`;
+  $('cov').classList.add('on');
+  $('yesNew').onclick=()=>{$('cov').classList.remove('on');openSetup();};
+  $('noNew').onclick=()=>{$('cov').classList.remove('on');};
+};
+
+if(!S.teams.length){
+  S.teams=T[S.lang].defaults.slice(0,2).map(n=>({name:n,score:0}));
+}
+render();
+if(!S.started){openSetup();}
+</script>
+</body>
+</html>

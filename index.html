@@ -3,10 +3,48 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Bible Jeopardy</title>
+<title>Bible Games (Juegos Bíblicos) · Christ the Redeemer RE</title>
+<meta name="description" content="Free bilingual (English/Spanish) Bible trivia games for Catholic Religious Education classrooms: Jeopardy, True or False, Wheel of Trivia and Speed Sort. Team-based, works on any projector, laptop or phone.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://oacalix.github.io/bible-games/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%8E%B2%3C/text%3E%3C/svg%3E">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Bible Games · Christ the Redeemer RE">
+<meta property="og:description" content="Free bilingual Bible trivia games for Catholic classrooms: Jeopardy, True or False, Wheel of Trivia and Speed Sort.">
+<meta property="og:url" content="https://oacalix.github.io/bible-games/">
+<meta property="og:image" content="https://oacalix.github.io/bible-games/screenshots/sc2.png">
+<meta property="og:locale" content="es_ES">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Bible Games · Christ the Redeemer RE">
+<meta name="twitter:description" content="Free bilingual Bible trivia games for Catholic classrooms.">
+<meta name="twitter:image" content="https://oacalix.github.io/bible-games/screenshots/sc2.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bungee&family=Nunito:ital,wght@0,600;0,800;0,900;1,600&display=swap" rel="stylesheet">
+<script src="analytics.js" defer></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "@id": "https://oacalix.github.io/bible-games/#website",
+  "name": "Bible Games",
+  "alternateName": "Juegos Bíblicos",
+  "url": "https://oacalix.github.io/bible-games/",
+  "description": "A hub of free, bilingual (English/Spanish) Bible trivia games for Catholic Religious Education classrooms: Jeopardy, True or False, Wheel of Trivia and Speed Sort.",
+  "inLanguage": ["es", "en"],
+  "isAccessibleForFree": true,
+  "author": { "@type": "Person", "name": "Oscar Calix", "url": "https://otdev.io/" },
+  "publisher": { "@type": "Person", "name": "Oscar Calix", "url": "https://otdev.io/" },
+  "about": "Catholic Religious Education, Bible trivia, Christian classroom games",
+  "hasPart": [
+    { "@type": "Game", "name": "Bible Jeopardy", "url": "https://oacalix.github.io/bible-games/jeopardy/" },
+    { "@type": "Game", "name": "True or False", "url": "https://oacalix.github.io/bible-games/true-false/" },
+    { "@type": "Game", "name": "Wheel of Trivia", "url": "https://oacalix.github.io/bible-games/wheel/" },
+    { "@type": "Game", "name": "Speed Sort", "url": "https://oacalix.github.io/bible-games/speed-sort/" }
+  ]
+}
+</script>
 <style>
 :root{
   --sky:#2fa8de; --ink:#1b1f3b; --soft:#4b5170;
@@ -19,667 +57,172 @@
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ --sky:#1f86b8; } }
 :root[data-theme="dark"]{ --sky:#1f86b8; }
 *,*::before,*::after{box-sizing:border-box}
-html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
-body{margin:0;height:100%;overflow:hidden;color:var(--ink);font-family:'Nunito',system-ui,'Segoe UI',Arial,sans-serif;font-weight:600;
+html{height:100%}
+body{margin:0;min-height:100%;color:var(--ink);font-family:'Nunito',system-ui,'Segoe UI',Arial,sans-serif;font-weight:600;
   background-color:var(--sky);
   background-image:repeating-conic-gradient(from 0deg at 50% -10%, rgba(255,255,255,.10) 0deg 8deg, transparent 8deg 16deg)}
 button{font-family:inherit;cursor:pointer;color:var(--ink)}
-button:focus-visible,input:focus-visible{outline:4px solid var(--yel);outline-offset:3px}
+button:focus-visible,a:focus-visible{outline:4px solid var(--yel);outline-offset:3px}
 
-/* ---------- layout a pantalla completa ---------- */
-.app{height:100%;display:flex;flex-direction:column;gap:1.4vh;padding:1.6vh 1.6vw}
-header{display:flex;align-items:center;gap:1.2vw;flex:none}
-h1{margin:0;font-family:var(--disp);font-weight:400;color:#fff;line-height:1;flex:0 1 auto;max-width:38%;
-  font-size:clamp(1rem,min(2.6vw,4.4vh),2.6rem);text-shadow:3px 3px 0 var(--ink)}
-.turn{flex:1;min-width:0;display:flex;align-items:center;gap:10px;background:#fff;border:4px solid var(--ink);border-radius:12px;
-  box-shadow:4px 4px 0 var(--ink);padding:.8vh 14px;font-weight:900;font-size:clamp(.9rem,min(1.6vw,2.7vh),1.5rem);
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.turn .dot{width:1.2em;height:1.2em;border-radius:50%;border:3px solid var(--ink);background:var(--c);flex:none}
-.ctrls{display:flex;gap:8px;flex:none}
-.chip{background:#fff;border:3px solid var(--ink);border-radius:10px;padding:.7vh 12px;font-weight:800;font-size:clamp(.8rem,min(1.1vw,2vh),1.05rem);box-shadow:3px 3px 0 var(--ink);white-space:nowrap}
-.chip{display:inline-flex;align-items:center;gap:6px}
+.wrap{max-width:1100px;margin:0 auto;padding:clamp(16px,4vh,40px) 18px calc(40px + env(safe-area-inset-bottom,0px))}
+header{text-align:center;margin-bottom:clamp(18px,4vh,36px)}
+h1{margin:0 0 8px;font-family:var(--disp);font-weight:400;color:#fff;line-height:1.15;
+  font-size:clamp(1.8rem,5vw,3rem);text-shadow:3px 3px 0 var(--ink)}
+.sub{color:#fff;font-weight:800;font-size:clamp(1rem,2.2vw,1.3rem);opacity:.95;margin:0}
+.intro{color:#fff;font-weight:700;font-size:.95rem;opacity:.85;margin:10px auto 0;max-width:640px;line-height:1.5}
+.langRow{display:flex;justify-content:center;margin-top:16px}
+.chip{background:#fff;border:3px solid var(--ink);border-radius:10px;padding:.7vh 14px;font-weight:800;
+  font-size:1rem;box-shadow:3px 3px 0 var(--ink)}
 .chip:active{transform:translate(2px,2px);box-shadow:1px 1px 0 var(--ink)}
 
-.board{flex:1;min-height:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));
-  grid-template-rows:auto repeat(5,minmax(0,1fr));gap:1.3vh 1.2vw}
-.cat{background:var(--c);border:4px solid var(--ink);border-radius:12px;box-shadow:4px 4px 0 var(--ink);
-  padding:.9vh 6px;text-align:center;display:flex;align-items:center;justify-content:center;gap:.5em;line-height:1.1;
-  font-weight:900;font-size:clamp(.75rem,min(1.6vw,2.7vh),1.5rem)}
-.cat .ic{font-size:1.3em;line-height:1}
-.tile{position:relative;height:100%;min-height:0;background:#fff;border:4px solid var(--ink);border-radius:12px;box-shadow:4px 4px 0 var(--ink);
-  font-family:var(--disp);font-size:clamp(1rem,min(4vw,6.5vh),4.2rem);overflow:hidden;transition:transform .1s,box-shadow .1s;padding:0}
-.tile::before{content:"";position:absolute;left:0;right:0;top:0;height:16%;background:var(--c);border-bottom:3px solid var(--ink)}
-.tile span{position:relative;top:6%}
-.tile:hover:not(:disabled){transform:translate(-2px,-2px);box-shadow:7px 7px 0 var(--ink)}
-.tile:active:not(:disabled){transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
-.tile:disabled{background:rgba(255,255,255,.12);border:3px dashed rgba(255,255,255,.55);box-shadow:none;cursor:default}
-.tile:disabled::before,.tile:disabled span{display:none}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:clamp(14px,2.4vw,22px)}
+.card{position:relative;background:#fff;border:4px solid var(--ink);border-radius:18px;box-shadow:6px 6px 0 var(--ink);
+  padding:22px 20px;display:flex;flex-direction:column;gap:10px;text-decoration:none;color:var(--ink);
+  transition:transform .12s,box-shadow .12s}
+.card.ready:hover{transform:translate(-3px,-3px);box-shadow:9px 9px 0 var(--ink)}
+.card.ready:active{transform:translate(2px,2px);box-shadow:3px 3px 0 var(--ink)}
+.card .top{display:flex;align-items:center;gap:12px}
+.card .ic{font-size:2.6rem;line-height:1;flex:none;width:1.3em;height:1.3em;display:flex;align-items:center;justify-content:center;
+  background:var(--c);border:3px solid var(--ink);border-radius:14px}
+.card h2{margin:0;font-family:var(--disp);font-weight:400;font-size:clamp(1.1rem,2.6vw,1.5rem);line-height:1.15}
+.card p{margin:0;font-size:.98rem;color:var(--soft);line-height:1.4;font-weight:700}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:6px}
+.tag{background:var(--c);border:2px solid var(--ink);border-radius:999px;padding:3px 10px;font-weight:900;font-size:.75rem}
+.tag.soon{background:#eef2f7;color:var(--soft)}
+.badge{position:absolute;top:-10px;right:14px;background:var(--red);color:#fff;border:3px solid var(--ink);border-radius:999px;
+  padding:3px 12px;font-weight:900;font-size:.75rem;box-shadow:3px 3px 0 var(--ink);transform:rotate(3deg)}
+.card.soon{opacity:.72;cursor:default}
+.card.soon .badge{background:var(--soft)}
 
-.scores{flex:none;display:grid;grid-template-columns:repeat(var(--n,2),minmax(0,1fr));gap:1.2vw}
-.team{background:#fff;border:4px solid var(--ink);border-radius:12px;box-shadow:4px 4px 0 var(--ink);
-  padding:.6vh 12px;display:flex;align-items:center;gap:10px}
-.team .sw{width:14px;align-self:stretch;border-radius:6px;background:var(--c);border:2px solid var(--ink);flex:none}
-.team .nm{flex:1;min-width:0;font-weight:900;font-size:clamp(.85rem,min(1.4vw,2.4vh),1.3rem);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.team .pt{font-family:var(--disp);font-size:clamp(1.1rem,min(2.4vw,4vh),2.4rem)}
-.team .adj{display:flex;flex-direction:column;gap:2px}
-.team .adj button{background:#fff;border:2px solid var(--ink);border-radius:6px;font-size:.68rem;font-weight:800;padding:0 5px;line-height:1.3}
-.team.now{background:var(--c)}
+footer{text-align:center;color:#fff;opacity:.9;font-weight:800;font-size:.92rem;margin-top:clamp(28px,5vh,46px)}
+footer a{color:#fff}
 
-/* pantallas bajitas (celular acostado): mismo tablero con scroll */
-@media (max-height:480px) and (min-width:701px){
-  body{overflow:auto;height:auto;min-height:100%}
-  .app{height:auto}
-  .board{grid-template-rows:auto;grid-auto-rows:64px}
+[data-lang="en"] .es{display:none}
+[data-lang="es"] .en{display:none}
+
+@media (max-width:480px){
+  .card{padding:18px 16px}
 }
-/* celular */
-@media (max-width:700px){
-  body{overflow:auto;height:auto;min-height:100%}
-  .app{height:auto;padding:10px 10px 0;gap:10px}
-  header{flex-wrap:wrap;gap:8px}
-  h1{max-width:none;flex:1 1 0;font-size:1.3rem}
-  .ctrls{gap:6px}
-  .chip{padding:6px 9px;font-size:1.05rem;box-shadow:2px 2px 0 var(--ink)}
-  .chip .ct{display:none}
-  .turn{order:3;flex-basis:100%;white-space:normal;font-size:1rem;padding:8px 12px;box-shadow:3px 3px 0 var(--ink)}
-  .board.m{grid-template-rows:none;grid-auto-rows:auto;gap:6px}
-  .board.m .cat{grid-column:1/-1;justify-content:flex-start;padding:6px 12px;font-size:1rem;margin-top:8px;border-width:3px;box-shadow:3px 3px 0 var(--ink)}
-  .board.m .cat:first-child{margin-top:0}
-  .board.m .tile{height:52px;font-size:1rem;border-width:3px;box-shadow:3px 3px 0 var(--ink)}
-  .board.m .tile:disabled{box-shadow:none}
-  .scores{position:sticky;bottom:0;z-index:5;margin:6px -10px 0;padding:10px 10px calc(10px + env(safe-area-inset-bottom,0px));
-    background:var(--sky);border-top:4px solid var(--ink);grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-  .team{padding:6px 8px;gap:6px;border-width:3px;box-shadow:3px 3px 0 var(--ink)}
-  .team{flex-wrap:wrap;row-gap:4px}
-  .team .sw{display:none}
-  .team .nm{flex-basis:100%;font-size:.95rem;border-bottom:3px solid var(--c);padding-bottom:2px}
-  .team .pt{flex:1}
-  .team .adj{flex-direction:row}
-  .team.now .nm{border-color:var(--ink)}
-  .team .pt{font-size:1.2rem}
-  .overlay{padding:calc(8px + env(safe-area-inset-top,0px)) 8px calc(8px + env(safe-area-inset-bottom,0px))}
-  .card{border-width:4px;box-shadow:5px 5px 0 var(--ink);padding:16px}
-  #qov .card{display:flex;flex-direction:column;min-height:100%}
-  .q{font-size:1.35rem;margin:14px 0 12px}
-  .who{font-size:1rem}
-  .opt{font-size:1.1rem;padding:10px 12px}
-  .ans .t{font-size:1.3rem}
-  #acts{display:grid;grid-template-columns:1fr 1fr;margin-top:auto;padding-top:14px}
-  #acts .btn{width:100%;text-align:center;padding:14px 10px}
-  #acts #optBtn,#acts #backBtn,#acts #nextBtn{grid-column:1/-1}
-  .btn.ghost{margin-left:0}
-  .themes,.names{grid-template-columns:1fr}
-}
-
-/* ---------- ventanas ---------- */
-.overlay{position:fixed;inset:0;background:rgba(27,31,59,.78);display:none;align-items:center;justify-content:center;
-  padding:calc(2vh + env(safe-area-inset-top,0px)) 2vw calc(2vh + env(safe-area-inset-bottom,0px));z-index:10}
-.overlay.on{display:flex}
-.card{background:#fff;border:5px solid var(--ink);border-radius:16px;box-shadow:10px 10px 0 var(--ink);
-  max-width:1000px;width:100%;max-height:100%;overflow:auto;padding:clamp(16px,3vh,32px) clamp(16px,3vw,36px);animation:pop .22s ease-out}
-@keyframes pop{from{transform:scale(.9) rotate(-1deg);opacity:0}to{transform:none;opacity:1}}
-.qhead{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
-.tag{background:var(--c);border:3px solid var(--ink);border-radius:999px;padding:4px 12px;font-weight:900}
-.val{font-family:var(--disp);font-size:1.4rem;background:var(--yel);border:3px solid var(--ink);border-radius:10px;padding:2px 12px}
-.val.x2{background:var(--red);color:#fff}
-.who{margin:14px 0 0;display:flex;align-items:center;gap:10px;background:var(--c);border:3px solid var(--ink);border-radius:12px;padding:8px 14px;font-weight:900;font-size:clamp(1.05rem,min(2.4vw,3.4vh),1.6rem)}
-.who.steal{animation:wob .5s}
-@keyframes wob{25%{transform:rotate(-1.5deg)}75%{transform:rotate(1.5deg)}}
-.q{margin:2.4vh 0 2vh;font-weight:900;font-size:clamp(1.35rem,min(3.4vw,5.4vh),3rem);line-height:1.2}
-.timer{height:14px;border:3px solid var(--ink);border-radius:999px;overflow:hidden;background:#eef2f7}
-.timer i{display:block;height:100%;width:100%;background:var(--grn);transition:width .1s linear}
-.opts{display:grid;gap:1.2vh;margin:1.8vh 0}
-.opts:empty{display:none}
-.opt{text-align:left;background:#fff;border:3px solid var(--ink);border-radius:12px;box-shadow:3px 3px 0 var(--ink);
-  padding:1vh 14px;display:flex;gap:12px;align-items:center;font-weight:900;font-size:clamp(1.05rem,min(2.4vw,3.8vh),2rem);line-height:1.15}
-.opt b{font-family:var(--disp);font-weight:400;background:var(--yel);border:3px solid var(--ink);border-radius:8px;width:2em;height:2em;display:inline-flex;align-items:center;justify-content:center;flex:none;font-size:.8em}
-.opt.ok{background:var(--grn)}
-.opt.no{background:#ffd6d6;opacity:.7;animation:shake .35s}
-.opt:disabled{cursor:default}
-@keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
-.ans{display:none;background:var(--grn);border:3px solid var(--ink);border-radius:12px;padding:12px 16px;margin:14px 0}
-.ans.on{display:block;animation:pop .22s}
-.ans .t{font-weight:900;font-size:clamp(1.25rem,min(3vw,4.6vh),2.4rem)}
-.ans .n{margin-top:6px;font-size:1.1rem}
-.ans .r{margin-top:6px;font-size:1rem}
-.result{font-family:var(--disp);font-size:clamp(1.1rem,3vw,1.8rem);margin:10px 0 0;text-align:center}
-.row{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
-.btn{border:3px solid var(--ink);border-radius:12px;box-shadow:4px 4px 0 var(--ink);padding:10px 18px;font-size:clamp(1rem,min(1.6vw,2.6vh),1.35rem);font-weight:900;background:#fff}
-.btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
-.btn.g{background:var(--grn)} .btn.r{background:var(--red);color:#fff} .btn.y{background:var(--yel)} .btn.p{background:var(--pur);color:#fff}
-.btn.ghost{box-shadow:none;border-style:dashed;margin-left:auto}
-
-.bonus{text-align:center;padding:16px 0}
-.bonus .ic{font-size:clamp(3rem,12vh,7rem)}
-.bonus .big{font-family:var(--disp);font-size:clamp(2rem,9vh,5rem);color:var(--red);text-shadow:3px 3px 0 var(--ink);animation:net .6s ease-out;line-height:1.1}
-.bonus p{font-size:1.4rem;font-weight:800}
-@keyframes net{0%{transform:scale(.3) rotate(-10deg)}70%{transform:scale(1.12) rotate(3deg)}100%{transform:none}}
-
-.setup h2,.end h2{margin:0;font-family:var(--disp);font-weight:400;font-size:clamp(1.4rem,4vw,2.2rem)}
-.setup .lbl{display:block;margin:18px 0 8px;font-weight:900;font-size:1.1rem}
-.pick{display:flex;gap:8px;flex-wrap:wrap}
-.pick button{background:#fff;border:3px solid var(--ink);border-radius:10px;padding:8px 14px;font-weight:900;font-size:1.05rem;box-shadow:3px 3px 0 var(--ink);text-align:left}
-.pick button small{display:block;font-weight:600;font-size:.82rem;color:var(--soft)}
-.pick button.sel{background:var(--yel)}
-.pick button.num{font-family:var(--disp);font-weight:400;font-size:1.3rem;padding:6px 18px}
-.themes{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px}
-.themes button{display:flex;align-items:center;gap:10px}
-.themes .ti{font-size:1.8rem}
-.names{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px}
-.names input{width:100%;font-family:inherit;font-weight:800;font-size:1.1rem;padding:10px 12px;border-radius:10px;border:3px solid var(--ink);background:var(--c)}
-.hint{margin:16px 0 0;color:var(--soft);font-size:.92rem}
-.rank{list-style:none;padding:0;margin:16px 0}
-.rank li{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;border:3px solid var(--ink);border-radius:10px;margin-bottom:8px;font-weight:900;font-size:1.2rem;background:#fff}
-.rank li span:last-child{font-family:var(--disp)}
-.rank li:first-child{background:var(--c);font-size:1.5rem;box-shadow:4px 4px 0 var(--ink)}
-canvas#fx{position:fixed;inset:0;pointer-events:none;z-index:20;width:100%;height:100%}
-@media (prefers-reduced-motion:reduce){ *{animation:none!important;transition:none!important} }
 </style>
 </head>
-<body>
-<div class="app">
+<body data-lang="es">
+<div class="wrap">
   <header>
-    <h1 id="title"></h1>
-    <div class="turn" id="turn"></div>
-    <div class="ctrls">
-      <button class="chip" id="langBtn"></button>
-      <button class="chip" id="timeBtn"></button>
-      <button class="chip" id="sndBtn"></button>
-      <button class="chip" id="newBtn"></button>
-    </div>
+    <h1><span class="es">🎲 Juegos Bíblicos</span><span class="en">🎲 Bible Games</span></h1>
+    <p class="sub">
+      <span class="es">Christ the Redeemer · Educación Religiosa · elegí un juego para tu clase</span>
+      <span class="en">Christ the Redeemer · Religious Education · pick a game for your class</span>
+    </p>
+    <p class="intro">
+      <span class="es">Juegos bíblicos gratuitos y bilingües (español/inglés) para catequesis y escuela dominical: Jeopardy, Verdadero o Falso, Rueda de Trivia y Carrera de Clasificación. Funcionan en cualquier proyector, computadora o celular, sin instalar nada.</span>
+      <span class="en">Free, bilingual (English/Spanish) Bible trivia games for catechesis and Sunday school: Jeopardy, True or False, Wheel of Trivia and Speed Sort. Work on any projector, laptop or phone — nothing to install.</span>
+    </p>
+    <div class="langRow"><button class="chip" id="langBtn" type="button"></button></div>
   </header>
-  <div class="board" id="board"></div>
-  <div class="scores" id="scores"></div>
+
+  <div class="grid">
+    <a class="card ready" href="jeopardy/" style="--c:#ffd23f">
+      <div class="top">
+        <span class="ic">🎣</span>
+        <h2><span class="es">Jeopardy Bíblico</span><span class="en">Bible Jeopardy</span></h2>
+      </div>
+      <p>
+        <span class="es">Tablero de 5 temas y 25 preguntas. Equipos, turnos, robos y una casilla de doble valor.</span>
+        <span class="en">5-topic board with 25 questions. Teams, turns, steals, and one double-value tile.</span>
+      </p>
+      <div class="tags">
+        <span class="tag">🇪🇸 🇬🇧</span>
+        <span class="tag"><span class="es">2–4 equipos</span><span class="en">2–4 teams</span></span>
+      </div>
+    </a>
+
+    <a class="card ready" href="true-false/" style="--c:#3ddc84">
+      <div class="top">
+        <span class="ic">⚡</span>
+        <h2><span class="es">Verdadero o Falso</span><span class="en">True or False</span></h2>
+      </div>
+      <p>
+        <span class="es">Ronda relámpago para repasar rápido lo que se vio en clase. Ideal para empezar o cerrar la sesión.</span>
+        <span class="en">A lightning round to quickly review class content. Great for opening or closing a session.</span>
+      </p>
+      <div class="tags">
+        <span class="tag">🇪🇸 🇬🇧</span>
+        <span class="tag"><span class="es">2–4 equipos</span><span class="en">2–4 teams</span></span>
+      </div>
+    </a>
+
+    <a class="card ready" href="wheel/" style="--c:#ff8c42">
+      <div class="top">
+        <span class="ic">🎡</span>
+        <h2><span class="es">Rueda de Trivia</span><span class="en">Wheel of Trivia</span></h2>
+      </div>
+      <p>
+        <span class="es">Girá la rueda para escoger el tema y respondé una pregunta de opción múltiple.</span>
+        <span class="en">Spin the wheel to pick a topic, then answer a multiple-choice question.</span>
+      </p>
+      <div class="tags">
+        <span class="tag">🇪🇸 🇬🇧</span>
+        <span class="tag"><span class="es">2–4 equipos</span><span class="en">2–4 teams</span></span>
+      </div>
+    </a>
+
+    <a class="card ready" href="speed-sort/" style="--c:#9b72f2">
+      <div class="top">
+        <span class="ic">🗂️</span>
+        <h2><span class="es">Carrera de Clasificación</span><span class="en">Speed Sort</span></h2>
+      </div>
+      <p>
+        <span class="es">Cada equipo clasifica tarjetas en las categorías correctas contra el reloj.</span>
+        <span class="en">Teams race the clock to sort cards into the correct categories.</span>
+      </p>
+      <div class="tags">
+        <span class="tag">🇪🇸 🇬🇧</span>
+        <span class="tag"><span class="es">2–4 equipos</span><span class="en">2–4 teams</span></span>
+      </div>
+    </a>
+
+    <div class="card soon" style="--c:#ff6b9a">
+      <span class="badge"><span class="es">Próximamente</span><span class="en">Coming soon</span></span>
+      <div class="top">
+        <span class="ic">🎤</span>
+        <h2><span class="es">Encuesta Familiar</span><span class="en">Family Feud</span></h2>
+      </div>
+      <p>
+        <span class="es">Las respuestas más votadas por la clase, al estilo "100 mexicanos dijieron".</span>
+        <span class="en">The class's top survey answers, Family-Feud style.</span>
+      </p>
+      <div class="tags"><span class="tag soon"><span class="es">En planeación</span><span class="en">Planned</span></span></div>
+    </div>
+  </div>
+
+  <footer>
+    <span class="es">Hecho por <a href="https://otdev.io/" target="_blank" rel="noopener">Oscar Calix</a> · código abierto en</span>
+    <span class="en">Made by <a href="https://otdev.io/" target="_blank" rel="noopener">Oscar Calix</a> · open source on</span>
+    <a href="https://github.com/oacalix/bible-games" target="_blank" rel="noopener">GitHub</a>
+  </footer>
 </div>
 
-<div class="overlay" id="qov"><div class="card" id="qcard"></div></div>
-<div class="overlay" id="sov"><div class="card setup" id="scard"></div></div>
-<div class="overlay" id="eov"><div class="card end" id="ecard"></div></div>
-<div class="overlay" id="cov"><div class="card" id="ccard"></div></div>
-<canvas id="fx"></canvas>
-
 <script>
-const TEAM_COLORS=['#ffd23f','#ff6b9a','#3ddc84','#9b72f2'];
-const CAT_COLORS=['#ffd23f','#3ddc84','#ff8c42','#ff6b9a','#9b72f2'];
-/* Formato de cada pregunta:
-   [pregunta ES, pregunta EN, [opciones ES], [opciones EN], "Libro ES / Book EN cap:vers", nota ES, nota EN]
-   La primera opción siempre es la correcta (en pantalla se barajan). */
-const THEMES=[
-{id:'jesus',ic:'✝️',t:['La vida de Jesús','The Life of Jesus'],cats:[
- {ic:'⭐',n:['Nacimiento','Birth'],qs:[
-  ['¿En qué pueblo nació Jesús?','In what town was Jesus born?',['Belén','Nazaret','Jerusalén'],['Bethlehem','Nazareth','Jerusalem'],'Lucas / Luke 2:4-7'],
-  ['No había lugar en el mesón. ¿Dónde acostó María al bebé Jesús?','There was no room at the inn. Where did Mary lay baby Jesus?',['En un pesebre','En una cuna de oro','En una canasta'],['In a manger','In a golden crib','In a basket'],'Lucas / Luke 2:7'],
-  ['Un ángel les dio la buena noticia mientras cuidaban sus ovejas de noche. ¿Quiénes eran?','An angel brought them good news while they watched their sheep at night. Who were they?',['Los pastores','Los soldados','Los reyes'],['The shepherds','The soldiers','The kings'],'Lucas / Luke 2:8-11'],
-  ['¿Qué siguieron los sabios de oriente para encontrar a Jesús?','What did the wise men from the east follow to find Jesus?',['Una estrella','Un río','Un camello guía'],['A star','A river','A guide camel'],'Mateo / Matthew 2:9-10'],
-  ['¿Cuáles fueron los tres regalos que los sabios le dieron a Jesús?','What three gifts did the wise men give Jesus?',['Oro, incienso y mirra','Oro, plata y perlas','Pan, miel y aceite'],['Gold, frankincense and myrrh','Gold, silver and pearls','Bread, honey and oil'],'Mateo / Matthew 2:11']]},
- {ic:'✨',n:['Milagros','Miracles'],qs:[
-  ['En una boda, Jesús hizo su primer milagro. ¿En qué convirtió el agua?','At a wedding Jesus did his first miracle. What did he turn the water into?',['En vino','En leche','En jugo de naranja'],['Wine','Milk','Orange juice'],'Juan / John 2:1-11'],
-  ['Con cinco panes y dos peces, Jesús alimentó a unos…','With five loaves and two fish, Jesus fed about…',['5,000 hombres','50 hombres','500 hombres'],['5,000 men','50 men','500 men'],'Mateo / Matthew 14:21','¡Sin contar a las mujeres y los niños!','Not even counting the women and children!'],
-  ['Una noche, los discípulos vieron a Jesús caminando sobre…','One night the disciples saw Jesus walking on…',['El agua','El fuego','Las nubes'],['The water','Fire','The clouds'],'Mateo / Matthew 14:25'],
-  ['Jesús llamó a su amigo para que saliera de la tumba después de 4 días. ¿Cómo se llamaba?','Jesus called his friend out of the tomb after 4 days. What was his name?',['Lázaro','Zaqueo','Nicodemo'],['Lazarus','Zacchaeus','Nicodemus'],'Juan / John 11:39-44'],
-  ['Jesús le habló al viento y la tormenta se calmó. ¿En qué mar estaban?','Jesus spoke to the wind and the storm calmed down. What sea were they on?',['El mar de Galilea','El mar Rojo','El mar Muerto'],['The Sea of Galilee','The Red Sea','The Dead Sea'],'Marcos / Mark 4:35-41']]},
- {ic:'🌱',n:['Parábolas','Parables'],qs:[
-  ['Un pastor tenía 100 ovejas. ¿Cuántas se le perdieron para que saliera a buscarlas?','A shepherd had 100 sheep. How many got lost so he went searching?',['Una','Diez','Cincuenta'],['One','Ten','Fifty'],'Lucas / Luke 15:4-6'],
-  ['¿Quién se detuvo a ayudar al hombre herido en el camino?','Who stopped to help the hurt man on the road?',['Un samaritano','Un sacerdote','Un soldado romano'],['A Samaritan','A priest','A Roman soldier'],'Lucas / Luke 10:30-35','El sacerdote y el levita pasaron de largo.','The priest and the Levite walked right past.'],
-  ['El hombre sabio construyó su casa sobre…','The wise man built his house on…',['La roca','La arena','El lodo'],['The rock','The sand','The mud'],'Mateo / Matthew 7:24-27'],
-  ['El hijo que malgastó toda su herencia terminó cuidando…','The son who wasted all his money ended up taking care of…',['Cerdos','Camellos','Gallinas'],['Pigs','Camels','Chickens'],'Lucas / Luke 15:15-24','¡Y cuando volvió, su papá le hizo una fiesta!','And when he came home, his dad threw him a party!'],
-  ['Jesús comparó el reino de Dios con una semilla pequeñita que crece hasta ser un árbol. ¿Qué semilla era?','Jesus compared God’s kingdom to a tiny seed that grows into a tree. What seed was it?',['De mostaza','De manzana','De girasol'],['A mustard seed','An apple seed','A sunflower seed'],'Mateo / Matthew 13:31-32']]},
- {ic:'🎣',n:['Amigos de Jesús','Friends of Jesus'],qs:[
-  ['¿Cuántos apóstoles escogió Jesús?','How many apostles did Jesus choose?',['12','7','40'],['12','7','40'],'Lucas / Luke 6:13'],
-  ['Antes de seguir a Jesús, Pedro y Andrés trabajaban como…','Before following Jesus, Peter and Andrew worked as…',['Pescadores','Carpinteros','Panaderos'],['Fishermen','Carpenters','Bakers'],'Mateo / Matthew 4:18-19','Jesús les dijo que ahora serían pescadores de personas.','Jesus told them they would now fish for people.'],
-  ['¿Quién bautizó a Jesús en el río Jordán?','Who baptized Jesus in the Jordan River?',['Juan el Bautista','Pedro','Moisés'],['John the Baptist','Peter','Moses'],'Mateo / Matthew 3:13-17'],
-  ['Era bajito y se subió a un árbol para poder ver a Jesús. ¿Quién era?','He was short, so he climbed a tree to see Jesus. Who was he?',['Zaqueo','Tomás','Mateo'],['Zacchaeus','Thomas','Matthew'],'Lucas / Luke 19:1-4'],
-  ['Lázaro tenía dos hermanas que eran amigas de Jesús. ¿Cómo se llamaban?','Lazarus had two sisters who were friends of Jesus. What were their names?',['Marta y María','Rut y Noemí','Ana y Elisabet'],['Martha and Mary','Ruth and Naomi','Anna and Elizabeth'],'Juan / John 11:1-5']]},
- {ic:'🌿',n:['Semana Santa','Holy Week'],qs:[
-  ['Jesús entró a Jerusalén montado en un…','Jesus rode into Jerusalem on a…',['Burrito','Caballo','Camello'],['Young donkey','Horse','Camel'],'Juan / John 12:14-15'],
-  ['La gente lo recibió agitando ramas de…','The people welcomed him waving branches from…',['Palmera','Pino','Roble'],['Palm trees','Pine trees','Oak trees'],'Juan / John 12:13'],
-  ['En la última cena, ¿qué les lavó Jesús a sus discípulos?','At the Last Supper, what did Jesus wash for his disciples?',['Los pies','Las manos','El cabello'],['Their feet','Their hands','Their hair'],'Juan / John 13:4-5'],
-  ['Jesús resucitó al ___ día.','Jesus rose again on the ___ day.',['Tercer','Séptimo','Décimo'],['Third','Seventh','Tenth'],'Lucas / Luke 24:6-7'],
-  ['Según Juan, ¿quién vio primero a Jesús resucitado junto a la tumba vacía?','In John’s Gospel, who first saw the risen Jesus by the empty tomb?',['María Magdalena','Pedro','Pilato'],['Mary Magdalene','Peter','Pilate'],'Juan / John 20:11-18']]}
-]},
-{id:'genesis',ic:'🌍',t:['En el principio: Génesis','In the Beginning: Genesis'],cats:[
- {ic:'🌍',n:['La creación','Creation'],qs:[
-  ['¿Qué creó Dios el primer día?','What did God create on the first day?',['La luz','Los animales','Los árboles'],['Light','The animals','The trees'],'Génesis / Genesis 1:3-5'],
-  ['¿Qué hizo Dios el séptimo día?','What did God do on the seventh day?',['Descansó','Creó el mar','Hizo la luna'],['He rested','He made the sea','He made the moon'],'Génesis / Genesis 2:2-3'],
-  ['¿Cómo se llamaba el jardín donde vivían Adán y Eva?','What was the name of the garden where Adam and Eve lived?',['Edén','Getsemaní','Babilonia'],['Eden','Gethsemane','Babylon'],'Génesis / Genesis 2:8'],
-  ['¿De qué formó Dios a Adán?','What did God make Adam from?',['Del polvo de la tierra','De una piedra','De una nube'],['The dust of the ground','A rock','A cloud'],'Génesis / Genesis 2:7'],
-  ['¿Qué animal engañó a Eva en el jardín?','Which animal tricked Eve in the garden?',['La serpiente','El león','El cuervo'],['The serpent','The lion','The raven'],'Génesis / Genesis 3:1-6']]},
- {ic:'🌈',n:['Noé','Noah'],qs:[
-  ['¿Qué construyó Noé?','What did Noah build?',['Un arca','Una torre','Un templo'],['An ark','A tower','A temple'],'Génesis / Genesis 6:14'],
-  ['¿Cuántos días y noches llovió?','How many days and nights did it rain?',['40','7','100'],['40','7','100'],'Génesis / Genesis 7:12'],
-  ['¿Qué señal puso Dios en el cielo como promesa?','What sign did God put in the sky as a promise?',['Un arcoíris','Una estrella','Un rayo'],['A rainbow','A star','Lightning'],'Génesis / Genesis 9:13'],
-  ['¿Qué ave regresó con una hoja de olivo en el pico?','Which bird came back with an olive leaf in its beak?',['Una paloma','Un cuervo','Un águila'],['A dove','A raven','An eagle'],'Génesis / Genesis 8:11'],
-  ['Noé tenía tres hijos: Sem, Cam y…','Noah had three sons: Shem, Ham and…',['Jafet','Abel','Isaac'],['Japheth','Abel','Isaac'],'Génesis / Genesis 6:10']]},
- {ic:'⛺',n:['La familia de Abraham',"Abraham's Family"],qs:[
-  ['Dios le prometió a Abraham tantos descendientes como…','God promised Abraham as many descendants as…',['Las estrellas del cielo','Los peces del mar','Las hojas de un árbol'],['The stars in the sky','The fish in the sea','The leaves on a tree'],'Génesis / Genesis 15:5'],
-  ['¿Cómo se llamaba la esposa de Abraham?',"What was the name of Abraham's wife?",['Sara','Rebeca','Raquel'],['Sarah','Rebekah','Rachel'],'Génesis / Genesis 17:15'],
-  ['¿Qué hijo tuvieron Abraham y Sara cuando ya eran muy viejitos?','What son did Abraham and Sarah have when they were very old?',['Isaac','Ismael','Jacob'],['Isaac','Ishmael','Jacob'],'Génesis / Genesis 21:1-3'],
-  ['Isaac tuvo hijos gemelos. ¿Cómo se llamaban?','Isaac had twin sons. What were their names?',['Esaú y Jacob','Caín y Abel','Pedro y Andrés'],['Esau and Jacob','Cain and Abel','Peter and Andrew'],'Génesis / Genesis 25:24-26'],
-  ['Esaú cambió sus derechos de hijo mayor por un plato de…','Esau traded his rights as the oldest son for a bowl of…',['Guiso de lentejas','Pan con miel','Pescado frito'],['Lentil stew','Bread and honey','Fried fish'],'Génesis / Genesis 25:29-34']]},
- {ic:'🧥',n:['José','Joseph'],qs:[
-  ['¿Qué regalo especial le dio Jacob a José?','What special gift did Jacob give Joseph?',['Una túnica de colores','Una espada','Un anillo'],['A colorful robe','A sword','A ring'],'Génesis / Genesis 37:3'],
-  ['¿Cuántos hermanos varones tenía José?','How many brothers did Joseph have?',['Once','Tres','Veinte'],['Eleven','Three','Twenty'],'Génesis / Genesis 35:22-26'],
-  ['Sus hermanos lo vendieron y terminó en…','His brothers sold him, and he ended up in…',['Egipto','Roma','Grecia'],['Egypt','Rome','Greece'],'Génesis / Genesis 37:28'],
-  ['El faraón soñó con vacas gordas y vacas flacas. ¿Qué significaba?','Pharaoh dreamed of fat cows and skinny cows. What did it mean?',['7 años de abundancia y 7 de hambre','7 guerras','7 reyes nuevos'],['7 years of plenty and 7 of famine','7 wars','7 new kings'],'Génesis / Genesis 41:25-30'],
-  ['Cuando sus hermanos llegaron a Egipto a comprar comida, ¿qué hizo José al final?','When his brothers came to Egypt to buy food, what did Joseph do in the end?',['Los perdonó','Los echó para siempre','Los ignoró'],['He forgave them','He sent them away forever','He ignored them'],'Génesis / Genesis 45:4-15']]},
- {ic:'❓',n:['¿Quién soy?','Who Am I?'],qs:[
-  ['Fui el primer hombre que Dios creó.','I was the first man God created.',['Adán','Noé','Moisés'],['Adam','Noah','Moses'],'Génesis / Genesis 2:7'],
-  ['Mi hermano Caín me tuvo envidia.','My brother Cain was jealous of me.',['Abel','Set','Enoc'],['Abel','Seth','Enoch'],'Génesis / Genesis 4:8'],
-  ['Mi esposa miró hacia atrás y se convirtió en estatua de sal.','My wife looked back and turned into a pillar of salt.',['Lot','Abraham','Jacob'],['Lot','Abraham','Jacob'],'Génesis / Genesis 19:26'],
-  ['Soñé con una escalera que llegaba al cielo, con ángeles subiendo y bajando.','I dreamed of a stairway to heaven with angels going up and down.',['Jacob','José','Isaac'],['Jacob','Joseph','Isaac'],'Génesis / Genesis 28:12'],
-  ['Dios me cambió el nombre a Israel.','God changed my name to Israel.',['Jacob','Abraham','José'],['Jacob','Abraham','Joseph'],'Génesis / Genesis 32:28']]}
-]},
-{id:'exodo',ic:'🌊',t:['Moisés y el Éxodo','Moses and the Exodus'],cats:[
- {ic:'🧺',n:['Bebé Moisés','Baby Moses'],qs:[
-  ['La mamá de Moisés lo escondió en una canasta en el río…',"Moses' mother hid him in a basket in the river…",['Nilo','Jordán','Éufrates'],['Nile','Jordan','Euphrates'],'Éxodo / Exodus 1:22'],
-  ['¿Quién encontró al bebé Moisés en el río?','Who found baby Moses in the river?',['La hija del faraón','Una pastora','Su abuela'],["Pharaoh's daughter",'A shepherd girl','His grandmother'],'Éxodo / Exodus 2:5-6'],
-  ['¿Quién cuidaba la canasta desde lejos?','Who watched the basket from far away?',['Su hermana','Su papá','Un soldado'],['His sister','His dad','A soldier'],'Éxodo / Exodus 2:4'],
-  ['Dios le habló a Moisés desde una zarza que…','God spoke to Moses from a bush that…',['Ardía pero no se quemaba','Cantaba','Tenía flores de oro'],['Was on fire but did not burn up','Was singing','Had golden flowers'],'Éxodo / Exodus 3:2'],
-  ['¿Quién acompañó a Moisés a hablar con el faraón?','Who went with Moses to talk to Pharaoh?',['Su hermano Aarón','Josué','Caleb'],['His brother Aaron','Joshua','Caleb'],'Éxodo / Exodus 4:14-16']]},
- {ic:'🐸',n:['Las plagas','The Plagues'],qs:[
-  ['¿Cuántas plagas envió Dios sobre Egipto?','How many plagues did God send on Egypt?',['10','3','12'],['10','3','12'],'Éxodo / Exodus 7-12'],
-  ['En la primera plaga, el agua del río se convirtió en…','In the first plague, the river water turned into…',['Sangre','Hielo','Leche'],['Blood','Ice','Milk'],'Éxodo / Exodus 7:20'],
-  ['¿Qué animalitos llenaron las casas, hasta las camas?','What little animals filled the houses, even the beds?',['Ranas','Conejos','Grillos'],['Frogs','Rabbits','Crickets'],'Éxodo / Exodus 8:3'],
-  ['En la última noche, ¿con qué marcaron sus puertas los israelitas?','On the last night, what did the Israelites put on their doorframes?',['Sangre de cordero','Pintura azul','Aceite'],["A lamb's blood",'Blue paint','Oil'],'Éxodo / Exodus 12:7,13'],
-  ['¿Cómo se llama la fiesta que recuerda esa noche?','What is the feast that remembers that night called?',['La Pascua','Pentecostés','Los Tabernáculos'],['Passover','Pentecost','Tabernacles'],'Éxodo / Exodus 12:11-14']]},
- {ic:'🌊',n:['El mar Rojo','The Red Sea'],qs:[
-  ['¿Qué pasó cuando Moisés extendió su mano sobre el mar?','What happened when Moses stretched his hand over the sea?',['Se abrió en dos','Se congeló','Se volvió arena'],['It split in two','It froze','It turned to sand'],'Éxodo / Exodus 14:21'],
-  ['¿Qué guiaba al pueblo durante el día?','What led the people during the day?',['Una columna de nube','Un ave blanca','Un camello'],['A pillar of cloud','A white bird','A camel'],'Éxodo / Exodus 13:21'],
-  ['¿Y qué los guiaba durante la noche?','And what led them at night?',['Una columna de fuego','La luna','Antorchas'],['A pillar of fire','The moon','Torches'],'Éxodo / Exodus 13:21'],
-  ['¿Quién persiguió a los israelitas con sus carros?','Who chased the Israelites with chariots?',['El ejército del faraón','Los filisteos','Los romanos'],["Pharaoh's army",'The Philistines','The Romans'],'Éxodo / Exodus 14:9'],
-  ['Después de cruzar, la hermana de Moisés bailó con una pandereta. ¿Cómo se llamaba?',"After crossing, Moses' sister danced with a tambourine. What was her name?",['María (Miriam)','Débora','Ana'],['Miriam','Deborah','Hannah'],'Éxodo / Exodus 15:20']]},
- {ic:'🏜️',n:['En el desierto','In the Desert'],qs:[
-  ['¿Qué comida especial caía del cielo cada mañana?','What special food fell from heaven each morning?',['Maná','Uvas','Arroz'],['Manna','Grapes','Rice'],'Éxodo / Exodus 16:14-15'],
-  ['¿Cuántos años anduvo el pueblo por el desierto?','How many years did the people wander in the desert?',['40','7','100'],['40','7','100'],'Números / Numbers 14:33'],
-  ['Moisés golpeó una ___ y salió agua para todos.','Moses struck a ___ and water came out for everyone.',['Roca','Palmera','Pared'],['Rock','Palm tree','Wall'],'Éxodo / Exodus 17:6'],
-  ['Mientras Moisés estaba en el monte, el pueblo hizo un ídolo con forma de…','While Moses was on the mountain, the people made an idol shaped like a…',['Becerro de oro','León de plata','Serpiente de madera'],['Golden calf','Silver lion','Wooden snake'],'Éxodo / Exodus 32:4'],
-  ['¿Quién guió al pueblo a la tierra prometida después de Moisés?','Who led the people into the promised land after Moses?',['Josué','Aarón','David'],['Joshua','Aaron','David'],'Josué / Joshua 1:1-2']]},
- {ic:'📜',n:['Los mandamientos','The Commandments'],qs:[
-  ['¿Cuántos mandamientos le dio Dios a Moisés?','How many commandments did God give Moses?',['10','12','7'],['10','12','7'],'Éxodo / Exodus 34:28'],
-  ['¿En qué monte los recibió?','On which mountain did he receive them?',['Sinaí','Carmelo','Los Olivos'],['Sinai','Carmel','Mount of Olives'],'Éxodo / Exodus 31:18'],
-  ['¿En qué estaban escritos?','What were they written on?',['Dos tablas de piedra','Un rollo de papel','Una pared'],['Two stone tablets','A paper scroll','A wall'],'Éxodo / Exodus 31:18'],
-  ['Honra a tu padre y a tu…','Honor your father and your…',['Madre','Maestro','Rey'],['Mother','Teacher','King'],'Éxodo / Exodus 20:12'],
-  ['¿Qué día de la semana mandó Dios apartar para descansar?','Which day of the week did God say to set apart for rest?',['El séptimo','El primero','El tercero'],['The seventh','The first','The third'],'Éxodo / Exodus 20:8-10']]}
-]},
-{id:'heroes',ic:'🛡️',t:['Héroes del Antiguo Testamento','Old Testament Heroes'],cats:[
- {ic:'🪨',n:['David','David'],qs:[
-  ['¿Cómo se llamaba el gigante que venció David?','What was the name of the giant David defeated?',['Goliat','Sansón','Saúl'],['Goliath','Samson','Saul'],'1 Samuel / 1 Samuel 17:4,50'],
-  ['¿Con qué venció David al gigante?','What did David use to defeat the giant?',['Una honda y una piedra','Una espada','Un arco'],['A sling and a stone','A sword','A bow'],'1 Samuel / 1 Samuel 17:49-50'],
-  ['Antes de ser rey, David cuidaba…','Before he was king, David took care of…',['Ovejas','Camellos','Caballos'],['Sheep','Camels','Horses'],'1 Samuel / 1 Samuel 16:11'],
-  ['¿Qué instrumento tocaba David para el rey Saúl?','What instrument did David play for King Saul?',['El arpa','La trompeta','El tambor'],['The harp','The trumpet','The drum'],'1 Samuel / 1 Samuel 16:23'],
-  ['¿Quién era el mejor amigo de David, hijo del rey Saúl?',"Who was David's best friend, King Saul's son?",['Jonatán','Absalón','Salomón'],['Jonathan','Absalom','Solomon'],'1 Samuel / 1 Samuel 18:1-3']]},
- {ic:'🦁',n:['Daniel','Daniel'],qs:[
-  ['Daniel fue echado en un foso de…','Daniel was thrown into a den of…',['Leones','Serpientes','Cocodrilos'],['Lions','Snakes','Crocodiles'],'Daniel / Daniel 6:16'],
-  ['¿Quién cerró la boca de los leones?',"Who shut the lions' mouths?",['Un ángel de Dios','Un soldado','El rey'],["God's angel",'A soldier','The king'],'Daniel / Daniel 6:22'],
-  ['¿Por qué castigaron a Daniel?','Why was Daniel punished?',['Por orar a Dios','Por robar','Por mentir'],['For praying to God','For stealing','For lying'],'Daniel / Daniel 6:10-13'],
-  ['Los amigos de Daniel no se inclinaron ante la estatua y los lanzaron a un…',"Daniel's friends would not bow to the statue, so they were thrown into a…",['Horno de fuego','Pozo','Río'],['Fiery furnace','Well','River'],'Daniel / Daniel 3:20'],
-  ['¿Cuántas personas vio el rey caminando dentro del horno?','How many people did the king see walking inside the furnace?',['Cuatro','Tres','Dos'],['Four','Three','Two'],'Daniel / Daniel 3:24-25']]},
- {ic:'🐋',n:['Jonás','Jonah'],qs:[
-  ['¿Qué se tragó a Jonás?','What swallowed Jonah?',['Un gran pez','Un cocodrilo','Un pulpo'],['A huge fish','A crocodile','An octopus'],'Jonás / Jonah 1:17'],
-  ['¿Cuántos días estuvo Jonás dentro del pez?','How many days was Jonah inside the fish?',['Tres','Siete','Cuarenta'],['Three','Seven','Forty'],'Jonás / Jonah 1:17'],
-  ['Dios mandó a Jonás a predicar a la ciudad de…','God sent Jonah to preach to the city of…',['Nínive','Jerusalén','Belén'],['Nineveh','Jerusalem','Bethlehem'],'Jonás / Jonah 1:2'],
-  ['En vez de obedecer, Jonás se subió a un barco para…','Instead of obeying, Jonah got on a ship to…',['Huir','Pescar','Visitar a su familia'],['Run away','Go fishing','Visit his family'],'Jonás / Jonah 1:3'],
-  ['¿Qué hizo la gente de Nínive al escuchar el mensaje?','What did the people of Nineveh do when they heard the message?',['Se arrepintieron','Se rieron','Atacaron a Jonás'],['They repented','They laughed','They attacked Jonah'],'Jonás / Jonah 3:5-10']]},
- {ic:'👑',n:['Mujeres valientes','Brave Women'],qs:[
-  ['¿Qué reina salvó a su pueblo hablando con el rey?','Which queen saved her people by speaking to the king?',['Ester','Jezabel','Sara'],['Esther','Jezebel','Sarah'],'Ester / Esther 7:3'],
-  ['¿Quién le dijo a su suegra: “a donde tú vayas, iré yo”?','Who told her mother-in-law, “Where you go, I will go”?',['Rut','Ester','Raquel'],['Ruth','Esther','Rachel'],'Rut / Ruth 1:16'],
-  ['¿Qué mujer fue jueza de Israel y se sentaba bajo una palmera?','Which woman was a judge of Israel and sat under a palm tree?',['Débora','Miriam','Ana'],['Deborah','Miriam','Hannah'],'Jueces / Judges 4:4-5'],
-  ['Ana oró mucho por un hijo y Dios le dio a…','Hannah prayed for a son and God gave her…',['Samuel','Saúl','Salomón'],['Samuel','Saul','Solomon'],'1 Samuel / 1 Samuel 1:20'],
-  ['Rahab escondió a los espías y colgó en su ventana un cordón de color…','Rahab hid the spies and hung a cord in her window. What color was it?',['Rojo','Azul','Verde'],['Scarlet red','Blue','Green'],'Josué / Joshua 2:18-21']]},
- {ic:'🛡️',n:['Más héroes','More Heroes'],qs:[
-  ['¿Quién era muy fuerte y su fuerza estaba ligada a su cabello?','Who was very strong, with his strength tied to his hair?',['Sansón','Goliat','Gedeón'],['Samson','Goliath','Gideon'],'Jueces / Judges 16:17'],
-  ['El pueblo marchó alrededor de una ciudad y sus murallas cayeron. ¿Cuál?','The people marched around a city and its walls fell down. Which one?',['Jericó','Nínive','Babilonia'],['Jericho','Nineveh','Babylon'],'Josué / Joshua 6:20'],
-  ['¿Qué rey, hijo de David, pidió sabiduría a Dios?','Which king, the son of David, asked God for wisdom?',['Salomón','Saúl','Josías'],['Solomon','Saul','Josiah'],'1 Reyes / 1 Kings 3:9-12'],
-  ['¿Qué profeta subió al cielo en un torbellino, con un carro de fuego?','Which prophet went up to heaven in a whirlwind, with a chariot of fire?',['Elías','Eliseo','Jonás'],['Elijah','Elisha','Jonah'],'2 Reyes / 2 Kings 2:11'],
-  ['Gedeón venció a un ejército enorme con solo…','Gideon defeated a huge army with only…',['300 hombres','3,000 hombres','30 hombres'],['300 men','3,000 men','30 men'],'Jueces / Judges 7:7']]}
-]},
-{id:'hechos',ic:'🔥',t:['La iglesia primitiva','The Early Church'],cats:[
- {ic:'🔥',n:['Pentecostés','Pentecost'],qs:[
-  ['Después de resucitar, Jesús subió al…','After rising again, Jesus went up into…',['Cielo','Monte Sinaí','Templo'],['Heaven','Mount Sinai','The temple'],'Hechos / Acts 1:9-11'],
-  ['En Pentecostés, sobre los discípulos aparecieron lenguas como de…','At Pentecost, tongues like what appeared over the disciples?',['Fuego','Agua','Hielo'],['Fire','Water','Ice'],'Hechos / Acts 2:3'],
-  ['¿Quién llenó a los discípulos ese día?','Who filled the disciples that day?',['El Espíritu Santo','Un rey','Moisés'],['The Holy Spirit','A king','Moses'],'Hechos / Acts 2:4'],
-  ['Los discípulos empezaron a hablar en otros…','The disciples began to speak in other…',['Idiomas','Colores','Instrumentos'],['Languages','Colors','Instruments'],'Hechos / Acts 2:4-6'],
-  ['¿Cuántas personas se bautizaron ese día?','About how many people were baptized that day?',['Unas 3,000','12','100'],['About 3,000','12','100'],'Hechos / Acts 2:41']]},
- {ic:'🗝️',n:['Pedro','Peter'],qs:[
-  ['Pedro y Juan sanaron en el templo a un hombre que no podía…','At the temple, Peter and John healed a man who could not…',['Caminar','Ver','Oír'],['Walk','See','Hear'],'Hechos / Acts 3:2-8'],
-  ['Un ángel sacó a Pedro de la…','An angel got Peter out of…',['Cárcel','Tormenta','Cueva'],['Prison','A storm','A cave'],'Hechos / Acts 12:6-10'],
-  ['Pedro tocó la puerta y la muchacha se emocionó tanto que no le abrió. ¿Cómo se llamaba?','Peter knocked and the girl was so excited she forgot to open the door. What was her name?',['Rode','Lidia','Dorcas'],['Rhoda','Lydia','Dorcas'],'Hechos / Acts 12:13-14'],
-  ['Pedro oró y Dios le devolvió la vida a una mujer que hacía ropa para los pobres. ¿Quién?','Peter prayed and God brought back to life a woman who made clothes for the poor. Who?',['Dorcas (Tabita)','Priscila','Marta'],['Dorcas (Tabitha)','Priscilla','Martha'],'Hechos / Acts 9:36-41'],
-  ['Pedro tuvo una visión de una gran sábana llena de…','Peter had a vision of a large sheet full of…',['Animales','Panes','Monedas'],['Animals','Bread','Coins'],'Hechos / Acts 10:11-12']]},
- {ic:'✉️',n:['Pablo','Paul'],qs:[
-  ['Antes de ser conocido como Pablo, su nombre era…','Before he was known as Paul, his name was…',['Saulo','Simón','Silas'],['Saul','Simon','Silas'],'Hechos / Acts 13:9'],
-  ['¿Camino a qué ciudad vio Saulo una luz brillante del cielo?','On the way to which city did Saul see a bright light from heaven?',['Damasco','Roma','Belén'],['Damascus','Rome','Bethlehem'],'Hechos / Acts 9:3'],
-  ['Después de esa luz, Saulo quedó ciego por…','After that light, Saul was blind for…',['Tres días','Un año','Una hora'],['Three days','One year','One hour'],'Hechos / Acts 9:9'],
-  ['Pablo y Silas cantaban en la cárcel a medianoche cuando hubo un…','Paul and Silas were singing in jail at midnight when there was an…',['Terremoto','Incendio','Diluvio'],['Earthquake','Fire','Flood'],'Hechos / Acts 16:25-26'],
-  ['Pablo escribió muchas ___ a las iglesias.','Paul wrote many ___ to the churches.',['Cartas','Canciones','Leyes'],['Letters','Songs','Laws'],'Romanos / Romans 1:1-7']]},
- {ic:'⛵',n:['Viajes','Journeys'],qs:[
-  ['Pablo viajaba a muchas ciudades para contarles de…','Paul traveled to many cities to tell people about…',['Jesús','Moisés','El emperador'],['Jesus','Moses','The emperor'],'Hechos / Acts 13:4-5'],
-  ['En el viaje a Roma, el barco de Pablo sufrió un…',"On the trip to Rome, Paul's ship had a…",['Naufragio','Incendio','Robo'],['Shipwreck','Fire','Robbery'],'Hechos / Acts 27:41-44'],
-  ['Después del naufragio llegaron a la isla de…','After the shipwreck they reached the island of…',['Malta','Creta','Chipre'],['Malta','Crete','Cyprus'],'Hechos / Acts 28:1'],
-  ['En esa isla, a Pablo lo mordió una…','On that island, Paul was bitten by a…',['Víbora','Araña','Perro'],['Snake','Spider','Dog'],'Hechos / Acts 28:3-5'],
-  ['¿A qué gran ciudad llegó Pablo al final del libro de Hechos?','Which great city did Paul reach at the end of the book of Acts?',['Roma','Atenas','Jerusalén'],['Rome','Athens','Jerusalem'],'Hechos / Acts 28:16']]},
- {ic:'🤝',n:['Amigos de la iglesia','Church Friends'],qs:[
-  ['¿Quién vio el cielo abierto y fue el primer mártir de la iglesia?','Who saw heaven open and was the first martyr of the church?',['Esteban','Felipe','Bernabé'],['Stephen','Philip','Barnabas'],'Hechos / Acts 7:55-60'],
-  ['Felipe le explicó las Escrituras a un hombre que venía de…','Philip explained the Scriptures to a man from…',['Etiopía','Egipto','Grecia'],['Ethiopia','Egypt','Greece'],'Hechos / Acts 8:27-35'],
-  ['Lidia vendía telas de color…','Lydia sold cloth that was…',['Púrpura','Verde','Amarillo'],['Purple','Green','Yellow'],'Hechos / Acts 16:14'],
-  ['Priscila y Aquila trabajaban junto con Pablo haciendo…','Priscilla and Aquila worked with Paul making…',['Tiendas de campaña','Zapatos','Barcos'],['Tents','Shoes','Boats'],'Hechos / Acts 18:2-3'],
-  ['¿Qué joven se durmió en una ventana mientras Pablo predicaba y se cayó?','Which young man fell asleep in a window while Paul preached and fell out?',['Eutico','Timoteo','Tito'],['Eutychus','Timothy','Titus'],'Hechos / Acts 20:9-12']]}
-]}
-];
-
-const DIFF={easy:{time:45,steal:20,auto:true,opts:true},normal:{time:30,steal:15,auto:false,opts:true},hard:{time:20,steal:10,auto:false,opts:false}};
-const T={
- es:{other:'English',sound:'🔊 Sonido',muted:'🔇 Sin sonido',newGame:'🔄 Nuevo juego',
-  pick:n=>`Le toca escoger a: ${n}`,used:'usada',
-  setupTitle:'Preparemos el juego',lang:'Idioma',theme:'Tema',diff:'Dificultad',howMany:'¿Cuántos equipos?',names:'Nombres de los equipos',start:'¡A jugar!',team:'Equipo',
-  diffs:{easy:['Fácil','Opciones a la vista'],normal:['Normal','Opciones si las piden'],hard:['Difícil','Sin opciones']},
-  timerLbl:'Reloj',timerOn:'⏱ Con tiempo',timerOff:'∞ Sin tiempo',timerOnD:'La cuenta regresiva presiona a los equipos',timerOffD:'Cada equipo responde con calma',
-  bonus:'¡Red llena!',bonusSub:'Esta pregunta vale el doble',go:'Ver la pregunta',
-  answering:n=>`🎤 Responde: ${n}`,steal:n=>`⚡ ¡Robo! Responde: ${n}`,
-  options:'Mostrar opciones',correct:'✅ Correcto',wrong:'❌ Incorrecto',back:'Volver al tablero',next:'Siguiente turno ▶',
-  noPoints:'Nadie gana puntos',endTitle:'🏆 ¡Fin del juego!',tie:'¡Empate! Todos ganan',win:n=>`¡Ganan ${n}!`,again:'Jugar otra vez',
-  confirmNew:'¿Empezar un juego nuevo? Se borran los puntos.',yesNew:'Sí, empezar de nuevo',cancel:'Cancelar',backGame:'Volver al juego',
-  keys:'Atajos: O muestra opciones, C marca correcto, X marca incorrecto, Enter pasa al siguiente turno, Esc vuelve al tablero.',
-  defaults:['Pescadores','Pastores','Sabios','Sembradores']},
- en:{other:'Español',sound:'🔊 Sound',muted:'🔇 Muted',newGame:'🔄 New game',
-  pick:n=>`${n}, it’s your turn to pick!`,used:'used',
-  setupTitle:'Set up the game',lang:'Language',theme:'Topic',diff:'Difficulty',howMany:'How many teams?',names:'Team names',start:'Let’s play!',team:'Team',
-  diffs:{easy:['Easy','Choices shown'],normal:['Normal','Choices on request'],hard:['Hard','No choices']},
-  timerLbl:'Timer',timerOn:'⏱ Timed',timerOff:'∞ No timer',timerOnD:'A countdown keeps teams on their toes',timerOffD:'Teams answer at their own pace',
-  bonus:'Full net!',bonusSub:'This question is worth double',go:'See the question',
-  answering:n=>`🎤 Answering: ${n}`,steal:n=>`⚡ Steal! Answering: ${n}`,
-  options:'Show choices',correct:'✅ Correct',wrong:'❌ Wrong',back:'Back to board',next:'Next turn ▶',
-  noPoints:'No points this time',endTitle:'🏆 Game over!',tie:'It’s a tie! Everybody wins',win:n=>`${n} win!`,again:'Play again',
-  confirmNew:'Start a new game? Scores will be cleared.',yesNew:'Yes, start over',cancel:'Cancel',backGame:'Back to the game',
-  keys:'Shortcuts: O shows choices, C marks correct, X marks wrong, Enter goes to the next turn, Esc goes back to the board.',
-  defaults:['Fishers','Shepherds','Wise Ones','Sowers']}
-};
-
-const KEY='bible-jeopardy-v4';
-let cur=null,timer=null;
-let S={lang:'es',theme:0,diff:'normal',timer:true,sound:true,teams:[],used:[],bonus:'',turn:0,started:false};
-try{const s=JSON.parse(localStorage.getItem(KEY)||'null');if(s&&s.teams)S=Object.assign(S,s);}catch(e){}
-function save(){
-  S.cur=cur?{k:cur.k,order:cur.order,val:cur.val,ans:cur.ans,stolen:cur.stolen,done:cur.done,shownOpts:cur.shownOpts,wrongOpts:cur.wrongOpts,result:cur.result}:null;
-  try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}
+const body=document.body;
+const KEY='bible-games-lang';
+function detectLang(){
+  const n=((navigator.language||navigator.userLanguage||'es')+'').toLowerCase();
+  return n.startsWith('en')?'en':'es';
 }
-const $=id=>document.getElementById(id);
-const t=k=>T[S.lang][k];
-const E=()=>S.lang==='en'?1:0;
-const TH=()=>THEMES[S.theme]||THEMES[0];
-const D=()=>DIFF[S.diff]||DIFF.normal;
-const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-function ref(r){const m=r.match(/^(.+?) \/ (.+?) (\d[\d:,\-]*)$/);return m?(E()?m[2]:m[1])+' '+m[3]:r;}
-function qv(q){const e=E();return{q:q[e],o:q[2+e],r:ref(q[4]),n:q[5+e]};}
-function swapDefaultNames(arr,from,to){return arr.map((n,i)=>n===T[from].defaults[i]?T[to].defaults[i]:n);}
-
-/* ---------- sonido ---------- */
-let AC=null;
-function tone(f,d,type='sine',delay=0,vol=.15){
-  if(!S.sound)return;
-  try{AC=AC||new (window.AudioContext||window.webkitAudioContext)();
-    const o=AC.createOscillator(),g=AC.createGain(),s=AC.currentTime+delay;
-    o.type=type;o.frequency.value=f;g.gain.setValueAtTime(vol,s);g.gain.exponentialRampToValueAtTime(.001,s+d);
-    o.connect(g).connect(AC.destination);o.start(s);o.stop(s+d);}catch(e){}
+let lang=detectLang();
+try{const saved=localStorage.getItem(KEY);if(saved)lang=saved;}catch(e){}
+function apply(){
+  body.dataset.lang=lang;
+  document.documentElement.lang=lang;
+  document.title=lang==='en'?'Bible Games':'Juegos Bíblicos';
+  document.getElementById('langBtn').textContent=lang==='en'?'🌐 Español':'🌐 English';
 }
-const sfx={
-  buzz(){tone(150,.45,'sawtooth',0,.1)},
-  tick(){tone(1000,.05,'square',0,.04)},
-  open(){tone(392,.08,'square',0,.06);tone(587,.12,'square',.08,.06)},
-  steal(){tone(300,.1,'square',0,.07);tone(450,.1,'square',.1,.07);tone(300,.1,'square',.2,.07);tone(450,.15,'square',.3,.07)},
-  bonus(){[523,659,784,1047,1319].forEach((f,i)=>tone(f,.2,'triangle',i*.09))},
-  win(){[523,659,784,659,784,1047].forEach((f,i)=>tone(f,.22,'triangle',i*.12))}
-};
-
-/* ---------- confeti ---------- */
-const cv=$('fx'),cx=cv.getContext('2d');let parts=[],raf=0;
-function burst(n=120){
-  if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
-  cv.width=innerWidth;cv.height=innerHeight;const cols=CAT_COLORS.concat('#ffffff');
-  for(let i=0;i<n;i++)parts.push({x:innerWidth/2,y:innerHeight*.45,vx:(Math.random()-.5)*16,vy:Math.random()*-14-4,
-    s:Math.random()*9+6,c:cols[i%cols.length],r:Math.random()*6,life:130});
-  if(!raf)loop();
-}
-function loop(){
-  cx.clearRect(0,0,cv.width,cv.height);
-  parts.forEach(p=>{p.vy+=.45;p.x+=p.vx;p.y+=p.vy;p.r+=.2;p.life--;
-    cx.save();cx.translate(p.x,p.y);cx.rotate(p.r);cx.fillStyle=p.c;cx.strokeStyle='#1b1f3b';cx.lineWidth=1.5;
-    cx.fillRect(-p.s/2,-p.s/4,p.s,p.s/2);cx.strokeRect(-p.s/2,-p.s/4,p.s,p.s/2);cx.restore();});
-  parts=parts.filter(p=>p.life>0&&p.y<cv.height+20);
-  raf=parts.length?requestAnimationFrame(loop):0;
-  if(!raf)cx.clearRect(0,0,cv.width,cv.height);
-}
-
-/* ---------- tablero ---------- */
-const MQ=matchMedia('(max-width:700px)');
-const mob=()=>MQ.matches;
-function chip(id,str){const i=str.indexOf(' '),el=$(id);
-  el.innerHTML=`<span class="ci" aria-hidden="true">${str.slice(0,i)}</span><span class="ct">${esc(str.slice(i+1))}</span>`;
-  el.setAttribute('aria-label',str.slice(i+1));el.title=str.slice(i+1);}
-function render(){
-  const e=E(),th=TH();
-  document.documentElement.lang=S.lang;document.title=th.t[e];
-  $('title').textContent=th.t[e];
-  chip('langBtn','🌐 '+t('other'));
-  chip('sndBtn',S.sound?t('sound'):t('muted'));
-  chip('timeBtn',S.timer?t('timerOn'):t('timerOff'));
-  chip('newBtn',t('newGame'));
-  const tm=S.teams[S.turn];
-  $('turn').innerHTML=tm?`<span class="dot" style="--c:${TEAM_COLORS[S.turn]}"></span><span>${esc(t('pick')(tm.name))}</span>`:'';
-  $('turn').style.visibility=tm?'visible':'hidden';
-  const catH=(c,ci)=>`<div class="cat" style="--c:${CAT_COLORS[ci]}"><span class="ic" aria-hidden="true">${c.ic}</span><span>${esc(c.n[e])}</span></div>`;
-  const tileH=(ci,r)=>{const k=ci+'-'+r,u=S.used.includes(k);
-    return `<button class="tile" style="--c:${CAT_COLORS[ci]}" data-k="${k}" ${u?`disabled aria-label="${t('used')}"`:''}><span>${(r+1)*100}</span></button>`;};
-  let h='';
-  if(mob()){th.cats.forEach((c,ci)=>{h+=catH(c,ci);for(let r=0;r<5;r++)h+=tileH(ci,r);});}
-  else{th.cats.forEach((c,ci)=>{h+=catH(c,ci)});for(let r=0;r<5;r++)th.cats.forEach((c,ci)=>{h+=tileH(ci,r)});}
-  $('board').classList.toggle('m',mob());
-  $('board').innerHTML=h;
-  $('scores').style.setProperty('--n',Math.max(2,S.teams.length));
-  $('scores').innerHTML=S.teams.map((x,i)=>`<div class="team${i===S.turn?' now':''}" style="--c:${TEAM_COLORS[i]}">
-    <span class="sw"></span><span class="nm">${i===S.turn?'🎤 ':''}${esc(x.name)}</span>
-    <span class="pt">${x.score}</span><span class="adj"><button data-adj="${i}" data-v="100" aria-label="+100">+100</button><button data-adj="${i}" data-v="-100" aria-label="-100">−100</button></span></div>`).join('');
-}
-function setLang(l){
-  if(l===S.lang)return;const from=S.lang;S.lang=l;
-  S.teams.forEach((x,i)=>{if(x.name===T[from].defaults[i])x.name=T[l].defaults[i]});
-  save();render();
-  if(cur){ if($('goQ'))drawBonus(); else drawQ(); }
-  if($('eov').classList.contains('on'))showEnd(true);
-}
-
-/* ---------- configuración ---------- */
-let setupCount=2,setupTheme=0,setupDiff='normal',setupTimer=true;
-function openSetup(){
-  setupCount=Math.max(2,S.teams.length||2);setupTheme=S.theme||0;setupDiff=S.diff||'normal';setupTimer=S.timer!==false;
-  drawSetup(S.teams.map(x=>x.name));$('sov').classList.add('on');
-}
-function drawSetup(names=[]){
-  const e=E();
-  $('scard').innerHTML=`<h2>${t('setupTitle')}</h2>
-   <span class="lbl">🌐 ${t('lang')}</span>
-   <div class="pick"><button class="${S.lang==='es'?'sel':''}" data-l="es">Español</button><button class="${S.lang==='en'?'sel':''}" data-l="en">English</button></div>
-   <span class="lbl">📚 ${t('theme')}</span>
-   <div class="pick themes">${THEMES.map((th,i)=>`<button class="${i===setupTheme?'sel':''}" data-th="${i}"><span class="ti" aria-hidden="true">${th.ic}</span><span>${esc(th.t[e])}</span></button>`).join('')}</div>
-   <span class="lbl">🎯 ${t('diff')}</span>
-   <div class="pick">${Object.keys(DIFF).map(d=>`<button class="${d===setupDiff?'sel':''}" data-d="${d}">${t('diffs')[d][0]}<small>${t('diffs')[d][1]}${setupTimer?', '+DIFF[d].time+' s':''}</small></button>`).join('')}</div>
-   <span class="lbl">⏱ ${t('timerLbl')}</span>
-   <div class="pick"><button class="${setupTimer?'sel':''}" data-tm="1">${t('timerOn')}<small>${t('timerOnD')}</small></button><button class="${setupTimer?'':'sel'}" data-tm="0">${t('timerOff')}<small>${t('timerOffD')}</small></button></div>
-   <span class="lbl">👥 ${t('howMany')}</span>
-   <div class="pick">${[2,3,4].map(n=>`<button data-n="${n}" class="num${n===setupCount?' sel':''}">${n}</button>`).join('')}</div>
-   <span class="lbl">✏️ ${t('names')}</span>
-   <div class="names">${Array.from({length:setupCount},(_,i)=>`<input style="--c:${TEAM_COLORS[i]}" maxlength="24" value="${esc(names[i]||t('defaults')[i])}" aria-label="${t('team')} ${i+1}">`).join('')}</div>
-   <p class="hint">${t('keys')}</p>
-   <div class="row"><button class="btn y" id="goBtn">${t('start')}</button>${S.started?`<button class="btn ghost" id="cancelSetup">${t('backGame')}</button>`:''}</div>`;
-}
-$('scard').addEventListener('click',e=>{
-  const inputs=()=>[...$('scard').querySelectorAll('input')].map(x=>x.value);
-  const b=e.target.closest('button');if(!b)return;
-  if(b.dataset.l){const c=inputs(),from=S.lang;setLang(b.dataset.l);drawSetup(swapDefaultNames(c,from,S.lang));return;}
-  if(b.dataset.th){const c=inputs();setupTheme=+b.dataset.th;drawSetup(c);return;}
-  if(b.dataset.tm){const c=inputs();setupTimer=b.dataset.tm==='1';drawSetup(c);return;}
-  if(b.dataset.d){const c=inputs();setupDiff=b.dataset.d;drawSetup(c);return;}
-  if(b.dataset.n){const c=inputs();setupCount=+b.dataset.n;drawSetup(c);return;}
-  if(b.id==='cancelSetup'){$('sov').classList.remove('on');render();return;}
-  if(b.id==='goBtn'){
-    S.teams=inputs().map((v,i)=>({name:v.trim()||t('defaults')[i],score:0}));
-    S.theme=setupTheme;S.diff=setupDiff;S.timer=setupTimer;
-    S.used=[];S.started=true;S.turn=Math.floor(Math.random()*S.teams.length);
-    S.bonus=Math.floor(Math.random()*5)+'-'+(Math.floor(Math.random()*3)+2);
-    save();render();$('sov').classList.remove('on');sfx.open();
-  }
+document.getElementById('langBtn').addEventListener('click',()=>{
+  lang=lang==='en'?'es':'en';
+  try{localStorage.setItem(KEY,lang);}catch(e){}
+  apply();
 });
-
-/* ---------- pregunta ---------- */
-function openQ(k){
-  const [ci,r]=k.split('-').map(Number),q=TH().cats[ci].qs[r];
-  cur={k,ci,r,q,order:[0,1,2].sort(()=>Math.random()-.5),val:(r+1)*100*(k===S.bonus?2:1),
-       ans:S.turn,stolen:false,done:false,shownOpts:D().auto,wrongOpts:[],result:''};
-  $('qov').classList.add('on');save();
-  if(k===S.bonus){sfx.bonus();burst(60);drawBonus();}
-  else{sfx.open();drawQ();startTimer(D().time);}
-}
-function drawBonus(){
-  $('qcard').innerHTML=`<div class="bonus"><div class="ic" aria-hidden="true">🎣</div><div class="big">${t('bonus')}</div>
-    <p>${t('bonusSub')}</p><button class="btn y" id="goQ">${t('go')}</button></div>`;
-  $('goQ').focus();
-}
-function drawQ(){
-  const e=E(),v=qv(cur.q),{val,ci,ans}=cur,isB=cur.k===S.bonus,tm=S.teams[ans],cat=TH().cats[ci];
-  const who=cur.done?'':`<div class="who${cur.stolen?' steal':''}" style="--c:${TEAM_COLORS[ans]}">${esc((cur.stolen?t('steal'):t('answering'))(tm.name))}</div>`;
-  const keep=$('tb')?$('tb').style.cssText:'';
-  $('qcard').innerHTML=`<div class="qhead"><span class="tag" style="--c:${CAT_COLORS[ci]}">${cat.ic} ${esc(cat.n[e])}</span>
-     <span class="val${isB?' x2':''}">${val}${isB?' ×2':''}</span></div>
-   ${who}
-   <div class="q">${esc(v.q)}</div>
-   ${cur.done||!S.timer?'':`<div class="timer"><i id="tb" style="${keep}"></i></div>`}
-   <div class="opts" id="opts">${cur.shownOpts&&D().opts?optsHTML():''}</div>
-   <div class="ans${cur.done?' on':''}" id="ans"><div class="t">✅ ${esc(v.o[0])}</div>
-     ${v.n?`<div class="n">${esc(v.n)}</div>`:''}<div class="r">📖 ${esc(v.r)}</div></div>
-   ${cur.result?`<div class="result">${esc(cur.result)}</div>`:''}
-   <div class="row" id="acts">${actsHTML()}</div>`;
-}
-function optsHTML(){
-  const o=qv(cur.q).o;
-  return cur.order.map((oi,i)=>{
-    const cls=cur.done&&oi===0?' ok':cur.wrongOpts.includes(oi)?' no':'';
-    const dis=cur.done||cur.wrongOpts.includes(oi)?'disabled':'';
-    return `<button class="opt${cls}" data-o="${oi}" ${dis}><b>${'ABC'[i]}</b><span>${esc(o[oi])}</span></button>`;
-  }).join('');
-}
-function actsHTML(){
-  if(cur.done)return `<button class="btn y" id="nextBtn">${t('next')}</button>`;
-  return `${cur.shownOpts||!D().opts?'':`<button class="btn p" id="optBtn">${t('options')}</button>`}
-    <button class="btn g" id="okBtn">${t('correct')}</button>
-    <button class="btn r" id="noBtn">${t('wrong')}</button>
-    ${cur.stolen?'':`<button class="btn ghost" id="backBtn">${t('back')}</button>`}`;
-}
-function showOpts(){if(!cur||cur.done||cur.shownOpts||!D().opts||!$('opts'))return;cur.shownOpts=true;$('opts').innerHTML=optsHTML();$('acts').innerHTML=actsHTML();save();}
-function judge(ok){
-  if(!cur||cur.done||!$('opts'))return;
-  stopTimer();
-  const tm=S.teams[cur.ans];
-  if(ok){
-    tm.score+=cur.val;cur.done=true;cur.result=`🎉 +${cur.val} ${tm.name}`;
-    sfx.win();burst();save();render();drawQ();
-  } else if(!cur.stolen&&S.teams.length>1){
-    sfx.steal();cur.stolen=true;cur.ans=(cur.ans+1)%S.teams.length;
-    drawQ();if($('tb'))$('tb').style.cssText='';startTimer(D().steal);save();
-  } else {
-    sfx.buzz();cur.done=true;cur.result=t('noPoints');drawQ();save();
-  }
-}
-function startTimer(sec){
-  stopTimer();if(!S.timer)return;const t0=Date.now();let last=sec;
-  timer=setInterval(()=>{
-    const left=sec-(Date.now()-t0)/1000,tb=$('tb');
-    if(!tb){stopTimer();return;}
-    tb.style.width=Math.max(0,left/sec*100)+'%';
-    tb.style.background=left<6?'var(--red)':left<sec/2?'var(--yel)':'var(--grn)';
-    const s=Math.ceil(left);if(s!==last&&s<=5&&s>0)sfx.tick();last=s;
-    if(left<=0){stopTimer();judge(false);}
-  },100);
-}
-function stopTimer(){clearInterval(timer);timer=null}
-function closeQ(finished){
-  stopTimer();
-  if(finished&&cur){if(!S.used.includes(cur.k))S.used.push(cur.k);S.turn=(S.turn+1)%S.teams.length;}
-  cur=null;$('qov').classList.remove('on');save();render();
-  if(S.used.length===25)setTimeout(showEnd,400);
-}
-$('qcard').addEventListener('click',e=>{
-  const b=e.target.closest('button');if(!b)return;
-  if(b.id==='goQ'){drawQ();startTimer(D().time);return;}
-  if(b.id==='optBtn'){showOpts();return;}
-  if(b.id==='okBtn'){judge(true);return;}
-  if(b.id==='noBtn'){judge(false);return;}
-  if(b.id==='backBtn'){closeQ(false);return;}
-  if(b.id==='nextBtn'){closeQ(true);return;}
-  if(b.dataset.o!==undefined&&!cur.done){
-    const oi=+b.dataset.o;
-    if(oi===0)judge(true);else{cur.wrongOpts.push(oi);judge(false);}
-  }
-});
-
-/* ---------- final ---------- */
-function showEnd(quiet){
-  const r=S.teams.map((x,i)=>({...x,i})).sort((a,b)=>b.score-a.score);
-  const tie=r.length>1&&r[0].score===r[1].score;
-  $('ecard').innerHTML=`<h2>${t('endTitle')}</h2>
-   <p style="font-size:1.35rem;font-weight:900;margin:12px 0 0">${esc(tie?t('tie'):t('win')(r[0].name))}</p>
-   <ol class="rank">${r.map(x=>`<li style="--c:${TEAM_COLORS[x.i]}"><span>${esc(x.name)}</span><span>${x.score}</span></li>`).join('')}</ol>
-   <button class="btn y" id="againBtn">${t('again')}</button>`;
-  $('eov').classList.add('on');
-  if(!quiet){sfx.win();burst(220);setTimeout(()=>burst(160),700);}
-}
-$('ecard').addEventListener('click',e=>{if(e.target.closest('#againBtn')){$('eov').classList.remove('on');openSetup();}});
-
-/* ---------- controles ---------- */
-$('board').addEventListener('click',e=>{const b=e.target.closest('.tile');if(b&&!b.disabled)openQ(b.dataset.k)});
-$('scores').addEventListener('click',e=>{const b=e.target.closest('[data-adj]');if(b){S.teams[+b.dataset.adj].score+=+b.dataset.v;save();render();}});
-$('langBtn').onclick=()=>{
-  if($('sov').classList.contains('on')){const c=[...$('scard').querySelectorAll('input')].map(x=>x.value),from=S.lang;setLang(from==='es'?'en':'es');drawSetup(swapDefaultNames(c,from,S.lang));}
-  else setLang(S.lang==='es'?'en':'es');
-};
-$('timeBtn').onclick=()=>{
-  S.timer=!S.timer;save();render();
-  if(cur&&!cur.done&&$('opts')){drawQ();if(S.timer)startTimer(cur.stolen?D().steal:D().time);else stopTimer();}
-  if($('sov').classList.contains('on')){setupTimer=S.timer;drawSetup([...$('scard').querySelectorAll('input')].map(x=>x.value));}
-};
-$('sndBtn').onclick=()=>{S.sound=!S.sound;save();render();};
-function askNew(){
-  if(!S.started){openSetup();return;}
-  $('ccard').innerHTML=`<p class="q" style="margin-top:0">${t('confirmNew')}</p>
-    <div class="row"><button class="btn r" id="yesNew">${t('yesNew')}</button><button class="btn" id="noNew">${t('cancel')}</button></div>`;
-  $('cov').classList.add('on');$('noNew').focus();
-}
-$('ccard').addEventListener('click',e=>{
-  const b=e.target.closest('button');if(!b)return;
-  $('cov').classList.remove('on');
-  if(b.id==='yesNew'){stopTimer();cur=null;$('qov').classList.remove('on');$('eov').classList.remove('on');save();openSetup();}
-});
-$('newBtn').onclick=askNew;
-document.addEventListener('keydown',e=>{
-  if(!cur||e.target.tagName==='INPUT')return;
-  const k=e.key.toLowerCase(),inQ=!!$('opts');
-  if(k==='escape'&&!cur.done&&!cur.stolen){closeQ(false);return;}
-  if(!inQ){if(k==='enter'&&$('goQ')){e.preventDefault();drawQ();startTimer(D().time);}return;}
-  if(k==='o')showOpts();
-  else if(k==='c')judge(true);
-  else if(k==='x')judge(false);
-  else if(k==='enter'&&cur.done){e.preventDefault();closeQ(true);}
-});
-
-MQ.addEventListener('change',render);
-render();
-if(!S.started||!S.teams.length)openSetup();
-else if(S.cur&&S.cur.k&&!S.used.includes(S.cur.k)){
-  const [ci,r]=S.cur.k.split('-').map(Number),cat=TH().cats[ci];
-  if(cat&&cat.qs[r]){
-    cur=Object.assign({ci,r,q:cat.qs[r]},S.cur);
-    $('qov').classList.add('on');drawQ();
-    if(!cur.done)startTimer(cur.stolen?D().steal:D().time);
-  }
-} else if(S.used.length===25)showEnd(true);
+apply();
 </script>
 </body>
 </html>

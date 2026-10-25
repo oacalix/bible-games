@@ -1,0 +1,20 @@
+# Bible Games
+
+> A free, open-source hub of bilingual (English/Spanish) Bible trivia games built for Catholic Religious Education (Sunday school) classrooms. No sign-up, no install, no backend — each game is a single static HTML page, playable on a projector, laptop or phone, and is meant to be read aloud by a teacher while 2–4 student teams compete for points.
+
+All games share one scoring engine: pick 2–4 teams, name them, and the app tracks turns, scores, and autosaves progress in the browser. Every game toggles between English and Spanish, auto-detects the visitor's browser language on first load, and offers Easy/Normal/Hard difficulty levels.
+
+## Games
+
+- [Bible Jeopardy](https://oacalix.github.io/bible-games/jeopardy/): A Jeopardy-style board with 5 topics x 25 questions (The Life of Jesus, Genesis, Moses and the Exodus, Old Testament Heroes, The Early Church), with steals and one double-value tile.
+- [True or False](https://oacalix.github.io/bible-games/true-false/): A fast lightning review round of true/false statements, with 7 decks: The Trinity & Creation, Prayer, The Life of Jesus, Genesis Stories, Moses & the Exodus, Old Testament Heroes, and The Early Church.
+- [Wheel of Trivia](https://oacalix.github.io/bible-games/wheel/): Spin an 11-category wheel (Trinity, Creation, Prayer, Common Prayers, Scripture & Prayer, God the Father, The Life of Jesus, Genesis Stories, Moses & the Exodus, Old Testament Heroes, The Early Church), then answer a multiple-choice question from that category. On Hard difficulty the choices are hidden and the teacher marks the answer correct or wrong from memory.
+- [Speed Sort](https://oacalix.github.io/bible-games/speed-sort/): Teams race to sort short statements into the correct category, across 4 decks: the three Persons of the Trinity, the five traditional forms of Christian prayer (blessing/adoration, petition, intercession, thanksgiving, praise), Miracle or Parable?, and Old or New Testament?.
+
+## Source
+
+- [GitHub repository](https://github.com/oacalix/bible-games): MIT-licensed source for all four games and the hub page. Each game's question bank lives as a plain JavaScript data array inside its own HTML file, documented in the repo's README.
+
+## About
+
+Made by Oscar Calix ([otdev.io](https://otdev.io/)) for Christ the Redeemer Catholic Church's Elementary Religious Education program. Free to use, adapt and share with any church or school.
